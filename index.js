@@ -5,7 +5,7 @@ import './components/heropoint-element.js';
 import './components/saving-throws.js';
 import './components/proficiencies-element.js';
 import './components/senses-element.js';
-import './components/proficiency-bonus.js'
-import './components/speed-element.js'
-import './components/ac-element.js'
-//import './components/proficiencyBonus-element.js'
+import './components/proficiency-bonus.js';
+import './components/speed-element.js';
+import './components/ac-element.js';
+import './components/nav-element.js';

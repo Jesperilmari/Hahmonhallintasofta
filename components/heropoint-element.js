@@ -52,7 +52,7 @@ class Heropoint extends LitElement {
       align-items: center;
       border-style: solid;
       z-index: 10;
-    position: relative;
+      position: relative;
     }
   `;
   static properties = {
