@@ -117,8 +117,15 @@ class CharacterAttribute extends LitElement {
   }
 
   firstUpdated() {
-
-  }
+  this.dispatchEvent(new CustomEvent('modifier-changed', {
+    bubbles: true,
+    composed: true,
+    detail: {
+      attr: this.id,
+      modifier: this.getModifier()
+    }
+  }));
+}
 
   mouseEnterAtribute() {
     this.highlight = true;

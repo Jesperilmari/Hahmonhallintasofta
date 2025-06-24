@@ -76,25 +76,25 @@ class Skill extends LitElement {
   }
 
   firstUpdated() {
-    requestAnimationFrame(() => this.calculateBonus());
   }
 
   connectedCallback() {
-    super.connectedCallback();
-    window.addEventListener('modifier-changed', this._handleModifierChanged);
-  }
+  super.connectedCallback();
+  window.addEventListener('attributes-ready', this._updateBonus);
+  window.addEventListener('modifier-changed', this._handleModifierChanged); // 👈 ADD THIS
+}
 
-  disconnectedCallback() {
-    window.removeEventListener('modifier-changed', this._handleModifierChanged);
-    super.disconnectedCallback();
-  }
+disconnectedCallback() {
+  window.removeEventListener('attributes-ready', this._updateBonus);
+  window.removeEventListener('modifier-changed', this._handleModifierChanged); // 👈 AND THIS
+}
 
   _handleModifierChanged = (e) => {
-    const { attr, modifier } = e.detail;
-    if (attr === this.attr) {
-      this.bonus = modifier;
-    }
-  };
+  const { attr, modifier } = e.detail;
+  if (attr === this.attr) {
+    this.bonus = modifier;
+  }
+};
 
   mouseEnterProficiencyBtn() {
     this.highlightProficiency = true;
@@ -106,17 +106,20 @@ class Skill extends LitElement {
       this.toggleProficiency = !this.toggleProficiency;
   }
 
-  calculateBonus() {
-    const characterAttribute = document.querySelector(`#${this.attr}`)
-    const modifier = characterAttribute.getModifier();
-    console.log(this.attr + modifier)
-
-    const proficiencyBonusElement = document.querySelector("proficiency-bonus")
-    const proficiencyBonus = proficiencyBonusElement.getProficiencyBonus()
-    //console.log(proficiencyBonus)
-
-    this.bonus = modifier
+  _updateBonus = () => {
+  const attrEl = document.querySelector(`#${this.attr}`);
+  if (attrEl && typeof attrEl.getModifier === 'function') {
+    this.bonus = attrEl.getModifier();
+  } else {
+    console.warn(`Could not find attribute element with id: ${this.attr}`);
   }
+};
+
+  calculateBonus(characterAttribute) {
+  const modifier = characterAttribute.getModifier();
+  console.log(`${this.attr} modifier: ${modifier}`);
+  this.bonus = modifier;
+}
 
   render() {
     return html`

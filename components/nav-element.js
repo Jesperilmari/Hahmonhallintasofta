@@ -43,10 +43,8 @@ class Nav extends LitElement {
     this.highlightSpells
   }
   navigateToSheet(){
-    window.location.href = '/index.html';
   }
   navigateToSpells(){
-    window.location.href = '/spells.html';
   }
   mouseEnter() {
     this.highlight = true;
