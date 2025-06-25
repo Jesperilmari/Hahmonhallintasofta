@@ -1,11 +1,12 @@
 import { LitElement, html, css } from 'lit-element';
+import { Router } from '@vaadin/router';
 
 class Nav extends LitElement {
 
   static styles = css`
   .bar{
     width: 100%;
-    height: 40px;
+    height: 50px;
     background-color: #13293D;
     border-bottom: 1px solid;
     border-color: white;
@@ -18,9 +19,12 @@ class Nav extends LitElement {
     align-items: center;
     margin: 10px;
     padding: 8px;
+    background-color: transparent;
+    border: none;
   }
-  .wrapper.highlihted{
-    background-color: lightgray;
+  .wrapper.highlighted{
+    background-color: #1d4062;
+    border-radius: 5px;
   }
   .navbutton{
     font-family: "Roboto Condensed", sans-serif;
@@ -35,16 +39,14 @@ class Nav extends LitElement {
   }
   `;
   static properties = {
-    highlight: { type: Boolean }
+    highlightHome: { type: Boolean },
+    highlightSpells: { type: Boolean },
   };
+
   constructor() {
     super();
-    this.highlightSheet
-    this.highlightSpells
-  }
-  navigateToSheet(){
-  }
-  navigateToSpells(){
+    this.highlightHome = false;
+    this.highlightSpells = false;
   }
   mouseEnter() {
     this.highlight = true;
@@ -55,24 +57,30 @@ class Nav extends LitElement {
 
   render() {
     return html`
-      <div class="bar">
-        <div class="wrapper ${this.highlight ? 'highlighted' : ''}" 
-        @click=${this.navigateToSheet}
-        @mouseenter="${this.mouseEnter}"
-        @mouseleave="${this.mouseLeave}" >  
-          <div class="navbutton">
-            <img src="./icons/scroll.png" class="scrollIcon">
-            HAHMOLOMAKE
-          </div>
+    <div class="bar">
+      <button class="wrapper ${this.highlightHome ? 'highlighted' : ''}" 
+        @click=${() => Router.go('/')}
+        @mouseenter=${() => this.highlightHome = true}
+        @mouseleave=${() => this.highlightHome = false}
+      >
+        <div class="navbutton">
+          <img src="./icons/scroll.png" class="scrollIcon">
+          HAHMOLOMAKE
         </div>
-        <div class="wrapper" @click=${this.navigateToSpells}>  
-          <div class="navbutton">
-            <img src="./icons/spell.png" class="scrollIcon">
-            TAIJAT
-          </div>
+      </button>
+
+      <button class="wrapper ${this.highlightSpells ? 'highlighted' : ''}" 
+        @click=${() => Router.go('/spells')}
+        @mouseenter=${() => this.highlightSpells = true}
+        @mouseleave=${() => this.highlightSpells = false}
+      >
+        <div class="navbutton">
+          <img src="./icons/spell.png" class="scrollIcon">
+          TAIJAT
         </div>
-      </div>
-    `;
+      </button>
+    </div>
+  `;
   }
 }
 customElements.define('nav-element', Nav);
