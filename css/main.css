@@ -1,7 +1,7 @@
 body {
     background-image: url("../Images/blueDragon.png");
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: 100%;
     padding: 0;
     margin: 0;
 }

@@ -2,7 +2,9 @@
   "dependencies": {
     "@vaadin/router": "^2.0.0",
     "lit": "^3.2.1",
-    "lit-element": "^4.2.0"
+    "lit-element": "^4.2.0",
+    "papaparse": "^5.5.3",
+    "vite": "^7.0.0"
   },
   "scripts": {
     "start": "wds --config web-dev-server.config.mjs"
