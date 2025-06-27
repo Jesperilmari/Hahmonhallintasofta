@@ -27,6 +27,7 @@ export class SpellCard extends LitElement {
         .title{
             font-weight: bold;
             border-bottom: solid 1px;
+            font-size: 20px;
         }
         .level{
             font-style: italic;
