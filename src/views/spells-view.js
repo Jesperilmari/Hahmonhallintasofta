@@ -57,7 +57,8 @@ export class SpellsView extends LitElement {
     const query = e.target.value.toLowerCase();
     this.filteredSpells = this.spells.filter(spell =>
       spell.nimi.toLowerCase().includes(query) ||
-      spell.loitsunPiiri.toLowerCase().includes(query)
+      spell.loitsunPiiri.toLowerCase().includes(query) ||
+      spell.loitsimisviive.toLowerCase().includes(query)
     );
   }
 
