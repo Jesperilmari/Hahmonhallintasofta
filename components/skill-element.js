@@ -81,12 +81,12 @@ class Skill extends LitElement {
   connectedCallback() {
   super.connectedCallback();
   window.addEventListener('attributes-ready', this._updateBonus);
-  window.addEventListener('modifier-changed', this._handleModifierChanged); // 👈 ADD THIS
+  window.addEventListener('modifier-changed', this._handleModifierChanged);
 }
 
 disconnectedCallback() {
   window.removeEventListener('attributes-ready', this._updateBonus);
-  window.removeEventListener('modifier-changed', this._handleModifierChanged); // 👈 AND THIS
+  window.removeEventListener('modifier-changed', this._handleModifierChanged);
 }
 
   _handleModifierChanged = (e) => {
