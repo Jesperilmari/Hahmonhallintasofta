@@ -149,7 +149,8 @@ class CharacterAttribute extends LitElement {
       composed: true,
       detail: {
         attr: this.id,
-        modifier: this.getModifier()
+        modifier: this.getModifier(),
+        element: this
       }
     }));
   }

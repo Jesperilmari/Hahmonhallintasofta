@@ -57,7 +57,7 @@ class proficiencyBonus extends LitElement {
   }
   `;
   static properties = {
-    bonus: {type : String},
+    bonus: {type : Number},
     highlight: { type: Boolean },
     showButtons: { type: Boolean }
   };
@@ -67,6 +67,14 @@ class proficiencyBonus extends LitElement {
     this.highlight = false;
     this.bonus = 2;
     this.showButtons = false;
+  }
+  
+  firstUpdated(){
+    this.dispatchEvent(new CustomEvent('proficiency-changed', {
+    detail: { value: this.bonus },
+    bubbles: true,
+    composed: true
+  }));
   }
 
   mouseEnter() {
@@ -79,13 +87,19 @@ class proficiencyBonus extends LitElement {
     this.showButtons = !this.showButtons;
   }
   _changeValue(i) {
-    const newValue = this.bonus + i;
-    this.bonus = newValue;
+    this.bonus += i;
+
+    this.dispatchEvent(new CustomEvent('proficiency-changed', {
+      detail: {value: this.bonus},
+      bubbles: true,
+      composed: true
+    }));
   }
 
   getProficiencyBonus(){
     return(this.bonus)
   }
+    
 
   render() {
     return html`
