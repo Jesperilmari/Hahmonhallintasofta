@@ -10,7 +10,7 @@ class Health extends LitElement {
         font-family: "Roboto Condensed", sans-serif;
         height: 110px;
         padding: 0;
-        margin: 10px;
+        width: 300px;
     }
     .title{
         display: flex;
@@ -32,7 +32,7 @@ class Health extends LitElement {
         border-bottom: 1px solid darkgray;
         margin-left:5px;
         margin-right:5px; 
-        width: 300px;
+        width: 290px;
     }
     .currentHealth{
         margin: 0;

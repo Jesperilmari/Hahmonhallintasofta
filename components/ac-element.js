@@ -9,8 +9,7 @@ class Armorclass extends LitElement {
         font-family: "Roboto Condensed", sans-serif;
         height: 110px;
         padding: 0;
-        margin-top: 10px;
-        margin-bottom: 10px;
+        margin: 10px;
         width: 300px;
         display: flex;
         flex-direction: row;

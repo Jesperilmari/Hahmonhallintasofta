@@ -11,7 +11,7 @@ import '../../components/speed-element.js';
 import '../../components/ac-element.js';
 
 class CharacterSheet extends LitElement {
-  static styles = css`
+    static styles = css`
 .bioBar {
     width: 100%;
     height: 50px;
@@ -28,7 +28,6 @@ class CharacterSheet extends LitElement {
 }
 
 .skills {
-    margin-top: 20px;
     border: 3px solid #add8e6;
     width: 300px;
     background-color: white;
@@ -77,8 +76,7 @@ class CharacterSheet extends LitElement {
 .characterClassLvl {
     margin: 0;
 }
-
-.secondRow {
+.secondRow{
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -132,13 +130,13 @@ class CharacterSheet extends LitElement {
 }
   `;
 
-  async firstUpdated() {
-  await this.updateComplete;
-  window.dispatchEvent(new CustomEvent('attributes-ready'));
-}
+    async firstUpdated() {
+        await this.updateComplete;
+        window.dispatchEvent(new CustomEvent('attributes-ready'));
+    }
 
-  render() {
-    return html`
+    render() {
+        return html`
       <div class="firstRow">
         <character-attribute name="VOIMAKKUUS" value="15" id="VOIM"></character-attribute>
         <character-attribute name="KETTERYYS" value="6" id="KET"></character-attribute>
@@ -147,9 +145,10 @@ class CharacterSheet extends LitElement {
         <character-attribute name="VIISAUS" value="10" id="VIIS"></character-attribute>
         <character-attribute name="KARISMA" value="18" id="KAR"></character-attribute>
         <proficiency-bonus></proficiency-bonus>
-        <speed-element></speed-element>
         <heropoint-element></heropoint-element>
+        <speed-element></speed-element>
         <health-element></health-element>
+        <ac-element></ac-element>
     </div>
     <div class="secondRow">
         <div class="skills">
@@ -208,10 +207,9 @@ class CharacterSheet extends LitElement {
             </div>
         </div>
         <div class="secondRowThirdClmn">
-            <ac-element></ac-element>
         </div>
     </div>
     `;
-  }
+    }
 }
 customElements.define('character-sheet', CharacterSheet);
