@@ -184,7 +184,7 @@ class CharacterSheet extends LitElement {
                     <div>
                         <savingthrows-element attr="VOIM" defVal=0></savingthrows-element>
                         <savingthrows-element attr="KET" defVal=0></savingthrows-element>
-                        <savingthrows-element attr="SIT" defVal=0></savingthrows-element>
+                        <savingthrows-element attr="SITK" defVal=0></savingthrows-element>
                     </div>
                     <div>
                         <savingthrows-element attr="ÄLY" defVal=0></savingthrows-element>
