@@ -1,4 +1,5 @@
 import { LitElement, html, css } from 'lit-element';
+import { classMap } from 'lit-html/directives/class-map.js';
 
 class SavingThrows extends LitElement {
 
@@ -27,6 +28,7 @@ class SavingThrows extends LitElement {
     margin-right: 15px;
     background-color: white;
     padding:0px;
+    flex-shrink: 0;
   }
   .modifier{
     position: absolute;
@@ -42,13 +44,15 @@ class SavingThrows extends LitElement {
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    font-size: 25px;
+    font-size: 22px;
     padding:0px;
     margin-left:10px;
   }
   .ominaisuusTitle{
     margin:0px;
     padding:0px;
+    flex-shrink: 0;
+    white-space: nowrap;
   }
   .firstRow {
   display: flex;
@@ -59,9 +63,90 @@ class SavingThrows extends LitElement {
     margin-left: 90px;
     font-weight:bold;
   }
+  .toggleproficiency.highlighted {
+      background-color: lightgray;
+    }
+    .toggleproficiency.toggled {
+      background-color: black;
+    }
   `;
   static properties = {
+    name: { type: String },
+    attr: { type: String },
+    bonus: { type: Number, state: true },
+    highlightProficiency: { type: Boolean, state: true },
+    toggleProficiency: { type: Boolean },
+    proficiencyBonus: { type: Number },
+    baseModifier: { type: Number, state: true }
   };
+
+  constructor() {
+    super();
+    this.highlightProficiency = false;
+    this.toggleProficiency = false;
+    this.proficiencyBonus = 0;
+    this.bonus = 0;
+    this.baseModifier = 0;
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    window.addEventListener('attributes-ready', this._updateBaseModifier);
+    window.addEventListener('modifier-changed', this._onModifierChanged);
+    window.addEventListener('proficiency-changed', this._onProficiencyChanged);
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    window.removeEventListener('attributes-ready', this._updateBaseModifier);
+    window.removeEventListener('modifier-changed', this._onModifierChanged);
+    window.removeEventListener('proficiency-changed', this._onProficiencyChanged);
+  }
+
+  firstUpdated() {
+    this._updateBaseModifier();
+  }
+
+  _updateBaseModifier = () => {
+    const attrEl = document.querySelector(`#${this.attr}`);
+    if (attrEl && typeof attrEl.getModifier === 'function') {
+      this.baseModifier = attrEl.getModifier();
+      this._recalculateBonus();
+    } else {
+      console.warn(`Skill Element: No attribute element found with id ${this.attr}`);
+    }
+  };
+
+  _onModifierChanged = (e) => {
+    if (e.detail.attr === this.attr) {
+      this.baseModifier = e.detail.modifier;
+      this._recalculateBonus();
+    }
+  };
+
+  _onProficiencyChanged = (e) => {
+    this.proficiencyBonus = e.detail.value;
+    this._recalculateBonus();
+  };
+
+  _recalculateBonus() {
+    const modifier = Number(this.baseModifier);
+    const proficiencyBonus = Number(this.proficiencyBonus);
+    this.bonus = modifier + (this.toggleProficiency ? proficiencyBonus : 0);
+  }
+
+  mouseEnterProficiencyBtn() {
+    this.highlightProficiency = true;
+  }
+
+  mouseLeaveProficiencyBtn() {
+    this.highlightProficiency = false;
+  }
+
+  clickProficiencyBtn() {
+    this.toggleProficiency = !this.toggleProficiency;
+    this._recalculateBonus();
+  }
 
   render() {
     return html`   
@@ -69,9 +154,19 @@ class SavingThrows extends LitElement {
       <div class="firstRow">
         <div class="firstColumn">
           <div class="saveWrapper">
-            <span class="toggleproficiency"></span>  
-            <p class="ominausuusTitle">${this.title}</p>
-            <span class="modifier">0</span>
+            <span
+              class=${classMap({
+                toggleproficiency: true,
+                highlighted: this.highlightProficiency,
+                toggled: this.toggleProficiency
+              })}
+              @mouseenter=${this.mouseEnterProficiencyBtn}
+              @mouseleave=${this.mouseLeaveProficiencyBtn}
+              @click=${this.clickProficiencyBtn}
+              title="Toggle proficiency"
+></span>  
+            <p class="ominausuusTitle">${this.attr}</p>
+            <span class="modifier">${this.bonus >= 0 ? `+${this.bonus}` : this.bonus}</span>
           </div>
         </div>
     </div>

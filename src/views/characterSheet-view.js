@@ -145,8 +145,8 @@ class CharacterSheet extends LitElement {
         <character-attribute name="VIISAUS" value="10" id="VIIS"></character-attribute>
         <character-attribute name="KARISMA" value="18" id="KAR"></character-attribute>
         <proficiency-bonus></proficiency-bonus>
-        <heropoint-element></heropoint-element>
         <speed-element></speed-element>
+        <heropoint-element></heropoint-element>
         <health-element></health-element>
         <ac-element></ac-element>
     </div>
@@ -182,14 +182,14 @@ class CharacterSheet extends LitElement {
             <div class="saveWrapper">
                 <div class="saveRow1">
                     <div>
-                        <savingthrows-element title="VOIM" defVal=0></savingthrows-element>
-                        <savingthrows-element title="KET" defVal=0></savingthrows-element>
-                        <savingthrows-element title="SIT" defVal=0></savingthrows-element>
+                        <savingthrows-element attr="VOIM" defVal=0></savingthrows-element>
+                        <savingthrows-element attr="KET" defVal=0></savingthrows-element>
+                        <savingthrows-element attr="SIT" defVal=0></savingthrows-element>
                     </div>
                     <div>
-                        <savingthrows-element title="ÄLY" defVal=0></savingthrows-element>
-                        <savingthrows-element title="VIIS" defVal=0></savingthrows-element>
-                        <savingthrows-element title="KAR" defVal=0></savingthrows-element>
+                        <savingthrows-element attr="ÄLY" defVal=0></savingthrows-element>
+                        <savingthrows-element attr="VIIS" defVal=0></savingthrows-element>
+                        <savingthrows-element attr="KAR" defVal=0></savingthrows-element>
                     </div>
                 </div>
                 <span class="saveTitle">
