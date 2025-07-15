@@ -1,6 +1,6 @@
 import { LitElement, html, css } from 'lit-element';
 
-class Armorclass extends LitElement {
+class ConditionsElement extends LitElement {
 
     static styles = css`
     .wrapper{
@@ -28,8 +28,6 @@ class Armorclass extends LitElement {
     .title{
         font-weight: bold;
         margin-bottom: 10px;
-        position: absolute;
-        transform: translateY(-200%); 
     }
 
     button{
@@ -50,7 +48,6 @@ class Armorclass extends LitElement {
         flex-direction: row;
         justify-content: center;
         align-items: center;
-        position: absolute;
     }
     .ac{
         font-weight: bold;
@@ -86,8 +83,7 @@ class Armorclass extends LitElement {
         shield: { type: Number },
         highlightAc: { type: Boolean },
         highlightShield: { type: Boolean },
-        showButtonsAc: { type: Boolean },
-        showButtonsShield: { type: Boolean }
+        showButtonsAc: { type: Boolean }
     };
 
     constructor() {
@@ -97,7 +93,6 @@ class Armorclass extends LitElement {
         this.ac = 10;
         this.shield = 12;
         this.showButtonsAc = false;
-        this.showButtonsShield = false;
     }
 
     mouseEnterAc() {
@@ -118,51 +113,19 @@ class Armorclass extends LitElement {
         this.showButtonsAc = !this.showButtonsAc;
     }
 
-    toggleButtonsShield() {
-        this.showButtonsShield = !this.showButtonsShield;
-    }
-
     _changeAc(i) {
         const newAc = this.ac + i;
         this.ac = newAc;
-    }
-
-    _changeShield(i) {
-        const newShield = this.shield + i;
-        this.shield = newShield;
     }
 
     render() {
         return html`
     <div class="wrapper">
         <div class="acBorder">
-            <span class="title">PUOLUSTUS</span>
-            <span class="buttonPos">
-            ${this.showButtonsAc ? html`<button @click=${() => this._changeAc(-1)}>-</button>` : ''}
-            <span class="ac ${this.highlightAc ? 'highlighted' : ''}"
-            @mouseenter="${this.mouseEnterAc}"
-            @mouseleave="${this.mouseLeaveAc}"
-            @click="${this.toggleButtonsAc}"
-            >
-            ${this.ac}</span>
-            ${this.showButtonsAc ? html`<button @click=${() => this._changeAc(1)}>+</button>` : ''}
-            </span>
-        </div>
-        <div class="acBorder">
-            <span class="title">KILVELLÄ</span>
-            <span class="buttonPos">
-            ${this.showButtonsShield ? html`<button @click=${() => this._changeShield(-1)}>-</button>` : ''}
-            <span class="shield ${this.highlightShield ? 'highlighted' : ''}"
-            @mouseenter="${this.mouseEnterShield}"
-            @mouseleave="${this.mouseLeaveShield}"
-            @click="${this.toggleButtonsShield}"
-            >
-            ${this.shield}</span>
-            ${this.showButtonsShield ? html`<button @click=${() => this._changeShield(1)}>+</button>` : ''}
-            </span>
+            Olotilat
         </div>
     </div>
     `;
     }
 }
-customElements.define('ac-element', Armorclass);
+customElements.define('conditions-element', ConditionsElement);

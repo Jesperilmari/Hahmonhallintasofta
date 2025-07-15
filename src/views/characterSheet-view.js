@@ -9,6 +9,8 @@ import '../../components/senses-element.js';
 import '../../components/proficiency-bonus.js';
 import '../../components/speed-element.js';
 import '../../components/ac-element.js';
+import '../../components/hitdice-element.js';
+import '../../components/conditions-element.js';
 
 class CharacterSheet extends LitElement {
     static styles = css`
@@ -149,6 +151,8 @@ class CharacterSheet extends LitElement {
         <heropoint-element></heropoint-element>
         <health-element></health-element>
         <ac-element></ac-element>
+        <hitdice-element></hitdice-element>
+        <conditions-element></conditions-element>
     </div>
     <div class="secondRow">
         <div class="skills">
