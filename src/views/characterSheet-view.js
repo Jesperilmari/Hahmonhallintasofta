@@ -140,7 +140,7 @@ class CharacterSheet extends LitElement {
       <div class="firstRow">
         <character-attribute name="VOIMAKKUUS" value="15" id="VOIM"></character-attribute>
         <character-attribute name="KETTERYYS" value="6" id="KET"></character-attribute>
-        <character-attribute name="SITKEYS" value="9"></character-attribute>
+        <character-attribute name="SITKEYS" value="9" id="SITK"></character-attribute>
         <character-attribute name="ÄLYKKYYS" value="27" id="ÄLY"></character-attribute>
         <character-attribute name="VIISAUS" value="10" id="VIIS"></character-attribute>
         <character-attribute name="KARISMA" value="18" id="KAR"></character-attribute>
