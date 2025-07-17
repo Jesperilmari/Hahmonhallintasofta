@@ -76,7 +76,7 @@ class Nav extends LitElement {
       >
         <div class="navbutton">
           <img src="./icons/spell.png" class="scrollIcon">
-          TAIJAT
+          LOITSUT
         </div>
       </button>
     </div>

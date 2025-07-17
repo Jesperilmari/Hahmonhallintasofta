@@ -19,7 +19,6 @@ class CharacterTabs extends LitElement {
     }
     .navigation{
         width: 100%;
-        height: 40px;
         display: flex;
         align-items: flex-start;
         flex-wrap: wrap;
