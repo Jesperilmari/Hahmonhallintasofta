@@ -17,18 +17,31 @@ class CharacterTabs extends LitElement {
     }
     .navigation{
         width: 100%;
-        height: 25px;
+        height: 40px;
         display: flex;
+        align-items: flex-start;
         flex-grow: 2;
-        border: solid red;
+    }
+    .navBtn{
+        font-family: "Roboto Condensed", sans-serif;
+        font-size: 15px;
+        font-weight: bold;
+        color: black;
+        margin: 5px;
+        border: none;
+        border-radius: 5px;
+        padding: 5px;
     }
     `
     render() {
         return html`
         <div class="wrapper">
             <div class="navigation">
-                <button>ASEET</button>
-                <button>TAIJAT</button>
+                <button class="navBtn">ASEET</button>
+                <button class="navBtn">LOITSIMINEN</button>
+                <button class="navBtn">VARUSTELUETTELO</button>
+                <button class="navBtn">LAJI & TAUSTA</button>
+                <button class="navBtn">MUISTIINPANOT</button>
             </div>
         </div>
         `
