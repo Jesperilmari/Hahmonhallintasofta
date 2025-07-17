@@ -11,6 +11,7 @@ import '../../components/speed-element.js';
 import '../../components/ac-element.js';
 import '../../components/hitdice-element.js';
 import '../../components/conditions-element.js';
+import '../../components/character-tabs.js';
 
 class CharacterSheet extends LitElement {
     static styles = css`
@@ -37,7 +38,12 @@ class CharacterSheet extends LitElement {
     display: flex;
     flex-direction: column;
     border-radius: 15px;
+    flex: 0 0 300px;
     height: 750px;
+}
+
+.skillsWrapper{
+    margin-top: 20px;
 }
 
 .firstRow {
@@ -80,16 +86,18 @@ class CharacterSheet extends LitElement {
 }
 .secondRow{
     display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
     flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    box-sizing: border-box;
+    gap: 10px;
 }
 
 .proficienciesWrapper {
     border: 3px solid #add8e6;
     width: 280px;
-    height: 400px;
+    height: 390px;
     background-color: white;
     display: flex;
     font-family: "Roboto Condensed", sans-serif;
@@ -114,6 +122,21 @@ class CharacterSheet extends LitElement {
     flex-direction: column;
     justify-content: flex-start;
 }
+.secondRowThirdClmn{
+    flex: 1 1 300px;
+    max-width: 1075px;
+    min-width: 310px;
+    height: 890px;
+    box-sizing: border-box;
+    margin-top: 20px;
+}
+character-tabs {
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 0;
+  min-width: 0;
+}
+
 .saveRow1{
     display: flex;
     flex-direction: row;
@@ -151,10 +174,10 @@ class CharacterSheet extends LitElement {
         <heropoint-element></heropoint-element>
         <health-element></health-element>
         <ac-element></ac-element>
-        <hitdice-element></hitdice-element>
-        <conditions-element></conditions-element>
     </div>
     <div class="secondRow">
+        <div class="skillsWrapper">
+            <conditions-element></conditions-element>
         <div class="skills">
             <div class="skilltitles">
                 <p class="pate">PÄTE</p>
@@ -182,7 +205,9 @@ class CharacterSheet extends LitElement {
             <skill-element name="Suostuttelu" attr="KAR"></skill-element>
             <skill-element name="Uhkailu" attr="KAR"></skill-element>
         </div>
+        </div>
         <div class="secondRowSecondClmn">
+            <hitdice-element></hitdice-element>
             <div class="saveWrapper">
                 <div class="saveRow1">
                     <div>
@@ -211,6 +236,7 @@ class CharacterSheet extends LitElement {
             </div>
         </div>
         <div class="secondRowThirdClmn">
+            <character-tabs></character-tabs>
         </div>
     </div>
     `;

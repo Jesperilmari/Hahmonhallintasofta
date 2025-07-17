@@ -8,8 +8,8 @@ class HitDice extends LitElement {
         background-color: white;
         font-family: "Roboto Condensed", sans-serif;
         height: 110px;
-        padding: 0;
         margin: 10px;
+        margin-top: 20px;
         width: 300px;
         display: flex;
         flex-direction: row;

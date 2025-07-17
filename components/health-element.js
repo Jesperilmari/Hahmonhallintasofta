@@ -84,6 +84,9 @@ class Health extends LitElement {
     }
   `;
     static properties = {
+        currentHealthHover: {type: Boolean},
+        maxHealthHover: {type: Boolean},
+        tempHealthHover: {type: Boolean}
     };
 
     render() {
