@@ -1,4 +1,5 @@
 import { LitElement, html, css } from 'lit-element';
+import '../../components/weapons-element.js';
 
 class CharacterTabs extends LitElement {
     static styles = css`
@@ -12,15 +13,16 @@ class CharacterTabs extends LitElement {
         height: 890px;
         max-width: 1075px;
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         flex: 1 1 100%;
+        justify-items: start;
     }
     .navigation{
         width: 100%;
         height: 40px;
         display: flex;
         align-items: flex-start;
-        flex-grow: 2;
+        flex-wrap: wrap;
     }
     .navBtn{
         font-family: "Roboto Condensed", sans-serif;
@@ -40,9 +42,11 @@ class CharacterTabs extends LitElement {
                 <button class="navBtn">ASEET</button>
                 <button class="navBtn">LOITSIMINEN</button>
                 <button class="navBtn">VARUSTELUETTELO</button>
+                <button class="navBtn">HAHMOLUOKKA & POLKU</button>
                 <button class="navBtn">LAJI & TAUSTA</button>
                 <button class="navBtn">MUISTIINPANOT</button>
             </div>
+            <weapons-element></weapons-element>
         </div>
         `
     }
