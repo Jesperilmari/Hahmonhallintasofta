@@ -1,6 +1,5 @@
 Nimi,Hinta,Vahinko,Vahinkotyyppi,Paino,Ominaisuudet, AseenTyyppi
 Heittokeihäs,5 hr,1n6,pistovahinkoa,1kg,Heitettävä (kantama 12/48),Yksinkertaiset lähitaisteluaseet	
-Keihäs,1 kr,1n/1n8,pistovahinkoa,1kg,"Heitettävä (kantama 8/24), yhden tai kahden käden ase",Yksinkertaiset lähitaisteluaseet
 Kirves,5 kr,1n6,viiltovahinkoa,1kg,"Kevyt ase, heitettävä (kantama 8/24)",Yksinkertaiset lähitaisteluaseet
 Nuija,1 hr,1n4,murskausvahinkoa,1kg,Kevyt ase,Yksinkertaiset lähitaisteluaseet
 Rautanuija,5kr,1n6,murskausvahinkoa,2kg,-,Yksinkertaiset lähitaisteluaseet
