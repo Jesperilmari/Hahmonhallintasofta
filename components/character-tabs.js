@@ -39,7 +39,7 @@ class CharacterTabs extends LitElement {
         return html`
         <div class="wrapper">
             <div class="navigation">
-                <button class="navBtn">TOIMINNOT</button>
+                <button class="navBtn">ASEET</button>
                 <button class="navBtn">LOITSIMINEN</button>
                 <button class="navBtn">VARUSTELUETTELO</button>
                 <button class="navBtn">HAHMOLUOKKA & POLKU</button>
