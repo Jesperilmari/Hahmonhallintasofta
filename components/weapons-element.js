@@ -12,27 +12,24 @@ class Weapons extends LitElement {
         margin-right: 10px;
         margin-bottom: 5px;
     }
-    .damageWrapper{
-        border: solid grey 1px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding: 5px;
-        margin-left: 120px;
-        border-radius: 5px;
-        position: absolute;
-        width: 90px;
+    .damageWrapper {
+    border: solid grey 1px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    border-radius: 5px;
+    width: 90px;
+    flex-shrink: 0;
     }
-    .weaponRow{
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        padding-left: 10px;
-        height: 45px;
-        padding-top: 0;
-        margin-top: 5px;
-        background-color: lightgray;
+    .weaponRow {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 5px 10px;
+    height: auto;
+    gap: 10px;
     }
     .vahinko{
         padding-left: 75px;
@@ -44,21 +41,21 @@ class Weapons extends LitElement {
         font-size: 12px;
         color: #696969;
     }
-    .hb{
-        font-weight:bold;
-        margin-left:240px;
-        font-size: 20px;
-        position: absolute;
+    .hb {
+    font-weight: bold;
+    font-size: 20px;
+    margin-left: 20px;
+    flex-shrink: 0;
     }
-    .properties{
-        margin-left: 280px;
-        position: absolute;
+    .properties {
+    margin-left: 20px;
+    flex-grow: 1;
     }
-    .name{
-        display: flex;
-        flex-wrap: wrap;
-        width: 120px;
-        margin-left: 0px;
+    .name {
+    display: flex;
+    flex-wrap: wrap;
+    width: 120px;
+    flex-shrink: 0;
     }
     .addBtn{
         border: none;
@@ -92,23 +89,34 @@ class Weapons extends LitElement {
         color: black;
     }
     .weaponRow.even {
-    background-color: white;
+    background-color: lightgray;
   }
 
   .weaponRow.odd {
-    background-color: lightgray;
+    background-color: white;
+  }
+  .desc{
+    margin-left: 10px;
+    border-left: solid lightgray 5px;
+    padding: 5px;
+  }
+  .actionTitles{
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 5px;
+    font-weight: bold;
   }
     `;
-    
+
     staticProperties = {
-        simpleMeleeWeapons: { type: Array},
-        addedWeapons: { type: Array}
+        simpleMeleeWeapons: { type: Array },
+        addedWeapons: { type: Array }
     }
 
-    static get properties(){
+    static get properties() {
         return {
-            weapons: {type: Array},
-            addedWeapons: {type: Array}
+            weapons: { type: Array },
+            addedWeapons: { type: Array }
         }
     }
 
@@ -124,7 +132,7 @@ class Weapons extends LitElement {
         await this.loadCSV();
     }
 
-    async loadCSV(){
+    async loadCSV() {
         const response = await fetch("data/simpleMeleeWeapons.csv")
         const csvText = await response.text();
 
@@ -136,7 +144,7 @@ class Weapons extends LitElement {
         console.log(this.weapons)
     }
 
-    firstUpdated(){
+    firstUpdated() {
     }
 
     handleAddWeapon() {
@@ -188,13 +196,16 @@ class Weapons extends LitElement {
                 <select class="weaponsDropDown" id="weapons">
                     <option value="default" disabled selected>Lisää ase</option>
                     ${this.weapons.map(
-                        weapon => html`<option class="dropdownOption" value="${weapon.Nimi}">${weapon.Nimi}</option>`
-                    )}
+            weapon => html`<option class="dropdownOption" value="${weapon.Nimi}">${weapon.Nimi}</option>`
+        )}
                 </select>
                 <button type="button" @click="${this.handleAddWeapon}" class="addBtn">+</button>
             </div>
             <div>
-                
+                <p class="actionTitles">TOIMINNOT TAISTELUSSA</p>
+                <p class="desc">Hyökkäys, Loitsiminen, Ryntäys, Irtaudu, Väistä, Auta, Piiloudu, Valmistaudu, Etsi, Käytä esinettä</p>
+                <p class="actionTitles">REAKTIO</p>
+                <p class="desc">Hahmolla on yksi vapaahyökkäys per kierros</p>
             </div>
         `;
     }

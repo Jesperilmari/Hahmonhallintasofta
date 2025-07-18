@@ -16,6 +16,7 @@ class CharacterTabs extends LitElement {
         flex-direction: column;
         flex: 1 1 100%;
         justify-items: start;
+        overflow-y: auto;
     }
     .navigation{
         width: 100%;
