@@ -32,7 +32,7 @@ class Nav extends LitElement {
     font-weight: bold;
     color: white;
   }
-  .scrollIcon{
+  .icon{
     height:20px;
     color: white;
     margin-right: 2px;
@@ -41,18 +41,14 @@ class Nav extends LitElement {
   static properties = {
     highlightHome: { type: Boolean },
     highlightSpells: { type: Boolean },
+    highlightWeapons: { type: Boolean },
   };
 
   constructor() {
     super();
     this.highlightHome = false;
     this.highlightSpells = false;
-  }
-  mouseEnter() {
-    this.highlight = true;
-  }
-  mouseLeave() {
-    this.highlight = false;
+    this.highlightWeapons = false;
   }
 
   render() {
@@ -64,7 +60,7 @@ class Nav extends LitElement {
         @mouseleave=${() => this.highlightHome = false}
       >
         <div class="navbutton">
-          <img src="./icons/scroll.png" class="scrollIcon">
+          <img src="./icons/scroll.png" class="icon">
           HAHMOLOMAKE
         </div>
       </button>
@@ -75,8 +71,18 @@ class Nav extends LitElement {
         @mouseleave=${() => this.highlightSpells = false}
       >
         <div class="navbutton">
-          <img src="./icons/spell.png" class="scrollIcon">
+          <img src="./icons/spell.png" class="icon">
           LOITSUT
+        </div>
+      </button>
+      <button class="wrapper ${this.highlightWeapons ? 'highlighted' : ''}" 
+        @click=${() => Router.go('/weapons')}
+        @mouseenter=${() => this.highlightWeapons = true}
+        @mouseleave=${() => this.highlightWeapons = false}
+      >
+        <div class="navbutton">
+          <img src="./icons/sword.png" class="icon">
+          ASEET
         </div>
       </button>
     </div>

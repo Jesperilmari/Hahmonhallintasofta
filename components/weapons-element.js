@@ -13,24 +13,24 @@ class Weapons extends LitElement {
         margin-bottom: 5px;
     }
     .damageWrapper {
-    border: solid grey 1px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 5px;
-    border-radius: 5px;
-    width: 90px;
-    flex-shrink: 0;
+        border: solid grey 1px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 5px;
+        border-radius: 5px;
+        width: 90px;
+        flex-shrink: 0;
     }
     .weaponRow {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 5px 10px;
-    height: auto;
-    gap: 10px;
-    background-color: lightgray;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 5px 10px;
+        height: auto;
+        gap: 10px;
+        background-color: lightgray;
     }
     .vahinkoTitle{
         padding-left: 30px;
@@ -44,22 +44,43 @@ class Weapons extends LitElement {
     .dmgType{
         font-size: 12px;
         color: #696969;
+        font-family: "Roboto Condensed", sans-serif;
+        border: none;
+        background: none;
+        align-items: center;
+        justify-content: center;
+        resize: none;
+        width:100%;
+        text-align: center;
+        line-height: 15px;
+        height:15px;
     }
     .hb {
-    font-weight: bold;
-    font-size: 20px;
-    margin-left: 0px;
-    flex-shrink: 0;
-    }
-    .properties {
-    margin-left: 20px;
-    flex-grow: 1;
-    }
-    .name {
-    display: flex;
-    flex-wrap: wrap;
-    width: 120px;
-    flex-shrink: 0;
+        font-weight: bold;
+        font-size: 20px;
+        margin-left: 0px;
+        flex-shrink: 0;
+        }
+    .propertiesTextArea {
+        margin-left: 20px;
+        flex-grow: 1;
+        font-family: "Roboto Condensed", sans-serif;
+        font-size: 17px;
+        border: none;
+        background: none;
+        align-items: center;
+        justify-content: center;
+        resize: none;
+        }
+    .nameTextArea {
+        width: 115px;
+        font-family: "Roboto Condensed", sans-serif;
+        font-size: 17px;
+        border: none;
+        background: none;
+        resize: none;
+        overflow: hidden;
+        padding: 0;
     }
     .addBtn{
         border: none;
@@ -126,6 +147,26 @@ class Weapons extends LitElement {
         margin-left: 10px;
         border:none;
     }
+    .img{
+        height: 20px;
+        width: 20px;
+    }
+    .dmgTextArea{
+    flex-wrap: wrap;
+    width: 100%;
+    flex-shrink: 0;
+    font-family: "Roboto Condensed", sans-serif;
+    font-size: 17px;
+    border: none;
+    background: none;
+    align-items: center;
+    justify-content: center;
+    resize: none;
+    line-height: 20px;
+    height:20px;
+    text-align: center;
+    overflow: hidden;
+    }
     `;
 
     staticProperties = {
@@ -167,6 +208,24 @@ class Weapons extends LitElement {
     }
 
     firstUpdated() {
+    this._resizeAllTextareas();
+    this.shadowRoot.addEventListener('input', event => {
+        if (event.target.tagName === 'TEXTAREA') {
+        this._resizeTextarea(event.target);
+        }
+    });
+    }
+
+    _resizeAllTextareas() {
+    const textareas = this.renderRoot.querySelectorAll('textarea');
+    for (const textarea of textareas) {
+        this._resizeTextarea(textarea);
+    }
+    }
+
+    _resizeTextarea(textarea) {
+    textarea.style.height = 'auto';
+    textarea.style.height = `${textarea.scrollHeight}px`;
     }
 
     handleAddWeapon() {
@@ -206,7 +265,7 @@ class Weapons extends LitElement {
             <div>
                 ${this.addedWeapons.map((weapon, i) => html`
                 <div class="weaponRow ${i % 2 === 0 ? 'even' : 'odd'}">
-                    <span class="name">${weapon.Nimi}</span>
+                    <textarea type="text" class="nameTextArea" spellcheck="false" .value="${weapon.Nimi}"></textarea>
                     <span class="hbWrapper">
                         <span class="hb">${weapon.hbBonus >= 0 ? '+' : ''}${weapon.hbBonus}</span>
                         <span class="buttonWrapper">
@@ -215,10 +274,14 @@ class Weapons extends LitElement {
                         </span>
                     </span>
                     <span class="damageWrapper">
-                    <span>${weapon.Vahinko}</span>
-                    <span class="dmgType">${weapon.Vahinkotyyppi}</span>
+                    <textarea type="text" class="dmgTextArea" spellcheck="false" .value="${weapon.Vahinko}"></textarea>
+                    <textarea class="dmgType" spellcheck="false" .value="${weapon.Vahinkotyyppi}"></textarea>
                     </span>
-                    <span class="properties">${weapon.Ominaisuudet}</span>
+                    <textarea class="propertiesTextArea" spellcheck="false" .value="${weapon.Ominaisuudet}"></textarea>
+                    <span class="options">
+                        <img src="../icons/edit.png" class="img">
+                        <img src="../icons/trash.png" class="img">
+                    </span>
                 </div>
                 `)}
                 </div>  
@@ -235,32 +298,7 @@ class Weapons extends LitElement {
                 <p class="actionTitles">TOIMINNOT TAISTELUSSA</p>
                 <p class="desc">Hyökkäys, Loitsiminen, Ryntäys, Irtaudu, Väistä, Auta, Piiloudu, Valmistaudu, Etsi, Käytä esinettä</p>
                 <p class="actionTitles">REAKTIO</p>
-                <p class="desc">Hahmolla on yksi vapaahyökkäys per kierros</p>
-                <p class="actionTitles">ASEIDEN OMINAISUUDET</p>
-                <p class="titles">Ammukset</p>
-                <p class="desc">Ase, jolla on ominaisuus “ammukset”, kuluttaa sille tarkoitettuja ammuksia (nuolia, vasamia, kiviä) hyökkäyksissä. Et voi hyökätä tällaisella aseella normaalisti, jos ammukset ovat loppuneet. Taistelun lopuksi voit keräillä puolet käytetyistä ammuksista, jos sinulla on vähintään minuutti aikaa tutkia taistelukenttää. Jos käytät tällaista asetta lähitaisteluhyökkäykseen, se toimii improvisoituna aseena (kts. kohta “improvisoidut aseet” myöhemmin). Lingossa täytyy olla lingon kivi paikallaan, jotta se toimii lähitaisteluaseena.</p>
-                <p class="titles">Tarkkuus</p>
-                <p class="desc">Tällaisella aseella voi osua tarkasti tiettyyn kohteeseen ja aseen käyttäminen voi vaatia tarkkaa taitoa. Kun hyökkäät aseella, jolla on ominaisuus “tarkkuus”, voit valita käytätkö voimakkuus- tai ketteryysmuuttujaasi hyökkäys- ja vahinkoheittoihin.</p>
-                <p class="titles">Raskas ase</p>
-                <p class="desc">Pienet olennot saavat haitan hyökkäysheittoihin raskailla aseilla.</p>
-                <p class="titles">Kevyt ase</p>
-                <p class="desc">Kevyet aseet ovat pieniä ja helppoja hallita. Ne ovat ideaaleja kahdella aseella taistelemiseen.</p>
-                <p class="titles">Ladattava</p>
-                <p class="desc">Voit tehdä ladattavalla aseella vain yhden hyökkäyksen toimintona, bonustoimintona tai reaktiona, vaikka voisitkin muuten hyökätä useammin saman toiminnon aikana.</p>
-                <p class="titles">Kantama</p>
-                <p class="desc">Aseen kantama ilmoitetaan kahdella luvulla. Ensimmäinen luku on normaalikantama metreinä ja toinen luku on pitkä kantama. Kun hyökkäät aseella normaalikantamaa pidemmälle matkalle, saat haitan hyökkäysheittoon.</p>
-                <p class="titles">Ulottuva</p>
-                <p class="desc">Voit hyökätä korkeintaan neljän metrin päähän aseella, jolla on ominaisuus ulottuva. Tämä koskee myös vapaahyökkäyksiä. Erikoispiirre. Näiden aseiden ominaisuudet on selitetty niiden omassa osiossaan Erikoispiirteiset aseet.</p>
-                <p class="titles">Heitettävä</p>
-                <p class="desc">Voit tehdä kantamahyökkäyksen aseella, jolla on ominaisuus heitettävä. Jos kyseessä on lähitaisteluase, käytä samaa ominaisuutta hyökkäys- ja vahinkoheittoihin kuin käyttäisit lähitaisteluhyökkäyksissäkin. Kirveen heittämiseen käytetään siis voimakkuutta ja tikarin heittämiseen joko ketteryyttä tai voimakkuutta, koska kyseessä on ase, jolla on ominaisuus “tarkkuus”.</p>
-                <p class="titles">Kahden käden ase</p>
-                <p class="desc">Tällaista asetta pitää käyttää hyökätessä kahdella kädellä.</p>
-                <p class="titles">Yhden tai kahden käden ase</p>
-                <p class="desc">Tätä asetta voi käyttää yhdellä tai kahdella kädellä. Kahdella kädellä käytettäessä vahinkoa tulee tämän ominaisuuden perässä olevan arvon verran.</p>
-                <p class="actionTitles">IMPROVISOIDUT ASEET</p>
-                <p class="desc">Joskus seikkailuissa tulee tilanne, jolloin hahmoilla ei ole käytössään omia aseitaan ja täytyy käyttää, mitä käteen sattuu sillä hetkellä. Improvisoituja aseita voivat olla pöydänjalat, paistinpannut, rikkoutuneet pullot tai vaikka peikkolaisten ruumiit. Joskus improvisoitu ase on tarpeeksi lähellä oikeaa asetta, että se voidaan laskea vastaavaksi oikeaksi aseeksi (esimerkiksi pöydänjalka on lähellä nuijaa). Pelinjohtajan hyväksynnällä hahmo voi käyttää oikean aseen pätevyysbonusta improvisoidullakin aseella. Esine, joka ei muistuta mitään asetta, tekee 1n4 vahinkoa ja pelinjohtaja voi määrittää vahinkotyypin. Jos hahmo käyttää kantama-asetta lähitaisteluaseena tai jos hahmo heittää lähitaisteluaseen, jolla ei ole ominaisutta heitettävä, tekee ase 1n4 vahinkoa. Improvisoidun heitetyn aseen kantama on (8/24).</p>
-                <p class="actionTitles">HOPEOIDUT ASEET</p>
-                <p class="desc">Jotkut olennot ovat immuuneja tai sietokykyisiä normaalien aseiden vahinkoa vastaan. Ne saattavat kuitenkin olla alttiita hopeisten aseiden vahingolle. Aseen tai kymmenen ammusta voi päällystää hopealla 100 kultarahan hintaan. Tämä hinta kattaa materiaalien lisäksi sepän työn.</p>
+                <p class="desc">Hahmolla on reaktiona yksi vapaahyökkäys per kierros</p>
             </div>
         `;
     }

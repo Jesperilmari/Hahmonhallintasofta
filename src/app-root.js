@@ -3,6 +3,7 @@ import { Router } from '@vaadin/router';
 
 import './views/characterSheet-view.js';
 import './views/spells-view.js';
+import './views/weapons-view.js';
 import '../components/nav-element.js';
 
 export class AppRoot extends LitElement {
@@ -13,6 +14,7 @@ export class AppRoot extends LitElement {
     router.setRoutes([
       { path: '/', component: 'character-sheet' },
       { path: '/spells', component: 'spells-view' },
+      { path: '/weapons', component: 'weapons-view'}
     ]);
   }
     render() {
