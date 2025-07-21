@@ -279,7 +279,6 @@ class Weapons extends LitElement {
                     </span>
                     <textarea class="propertiesTextArea" spellcheck="false" .value="${weapon.Ominaisuudet}"></textarea>
                     <span class="options">
-                        <img src="../icons/edit.png" class="img">
                         <img src="../icons/trash.png" class="img">
                     </span>
                 </div>

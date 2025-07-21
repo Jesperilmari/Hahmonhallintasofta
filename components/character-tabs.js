@@ -1,5 +1,10 @@
 import { LitElement, html, css } from 'lit-element';
 import '../../components/weapons-element.js';
+import '../../components/raceNbg-element.js';
+import '../../components/casting-element.js';
+import '../../components/inventory-element.js';
+import '../../components/character-class.js';
+import '../../components/notes-element.js';
 
 class CharacterTabs extends LitElement {
     static styles = css`
@@ -35,20 +40,52 @@ class CharacterTabs extends LitElement {
         padding: 5px;
     }
     `
+    static properties = {
+        currentView: { type: String },
+    };
+
+    constructor() {
+        super();
+        this.currentView = 'aseet';
+    }
+
+    setView(view) {
+        this.currentView = view;
+    }
+
     render() {
         return html`
         <div class="wrapper">
             <div class="navigation">
-                <button class="navBtn">ASEET</button>
-                <button class="navBtn">LOITSIMINEN</button>
-                <button class="navBtn">VARUSTELUETTELO</button>
-                <button class="navBtn">HAHMOLUOKKA & POLKU</button>
-                <button class="navBtn">LAJI & TAUSTA</button>
-                <button class="navBtn">MUISTIINPANOT</button>
+                <button class="navBtn" @click=${() => this.setView('aseet')}>ASEET</button>
+                <button class="navBtn" @click=${() => this.setView('casting')}>LOITSIMINEN</button>
+                <button class="navBtn" @click=${() => this.setView('inventory')}>VARUSTELUETTELO</button>
+                <button class="navBtn" @click=${() => this.setView('class')}>HAHMOLUOKKA & POLKU</button>
+                <button class="navBtn" @click=${() => this.setView('racenbg')}>LAJI & TAUSTA</button>
+                <button class="navBtn" @click=${() => this.setView('notes')}>MUISTIINPANOT</button>
             </div>
-            <weapons-element></weapons-element>
+            ${this.renderView()}
         </div>
         `
+    }
+
+    renderView() {
+        switch (this.currentView) {
+            case 'aseet':
+                return html`<weapons-element></weapons-element>`;
+            case 'racenbg':
+                return html`<racenbg-element></racenbg-element>`;
+            case 'casting':
+                return html`<casting-element></casting-element>`;
+            case 'inventory':
+                return html`<inventory-element></inventory-element>`;
+            case 'class':
+                return html`<character-class></character-class>`;
+            case 'notes':
+                return html`<notes-element></notes-element>`;
+            default:
+                return html`<weapons-element></weapons-element>`;
+        }
     }
 }
 customElements.define('character-tabs', CharacterTabs);
