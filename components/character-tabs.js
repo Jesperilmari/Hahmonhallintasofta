@@ -61,7 +61,7 @@ class CharacterTabs extends LitElement {
                 <button class="navBtn" @click=${() => this.setView('casting')}>LOITSIMINEN</button>
                 <button class="navBtn" @click=${() => this.setView('inventory')}>VARUSTELUETTELO</button>
                 <button class="navBtn" @click=${() => this.setView('class')}>HAHMOLUOKKA & POLKU</button>
-                <button class="navBtn" @click=${() => this.setView('racenbg')}>LAJI & TAUSTA</button>
+                <button class="navBtn" @click=${() => this.setView('racenbg')}>HAHMO, LAJI & TAUSTA</button>
                 <button class="navBtn" @click=${() => this.setView('notes')}>MUISTIINPANOT</button>
             </div>
             ${this.renderView()}
