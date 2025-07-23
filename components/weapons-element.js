@@ -41,7 +41,7 @@ class Weapons extends LitElement {
     .propertiesTitle{
         padding-left: 50px;
     }
-    .dmgType{
+    .dmgTypeTextArea{
         font-size: 12px;
         color: #696969;
         font-family: "Roboto Condensed", sans-serif;
@@ -71,6 +71,7 @@ class Weapons extends LitElement {
         align-items: center;
         justify-content: center;
         resize: none;
+        line-height: 20px;
         }
     .nameTextArea {
         width: 115px;
@@ -81,6 +82,7 @@ class Weapons extends LitElement {
         resize: none;
         overflow: hidden;
         padding: 0;
+        line-height: 20px;
     }
     .addBtn{
         border: none;
@@ -152,21 +154,21 @@ class Weapons extends LitElement {
         width: 20px;
     }
     .dmgTextArea{
-    flex-wrap: wrap;
-    width: 100%;
-    flex-shrink: 0;
-    font-family: "Roboto Condensed", sans-serif;
-    font-size: 17px;
-    border: none;
-    background: none;
-    align-items: center;
-    justify-content: center;
-    resize: none;
-    line-height: 20px;
-    height:20px;
-    text-align: center;
-    overflow: hidden;
-    }
+        flex-wrap: wrap;
+        width: 100%;
+        flex-shrink: 0;
+        font-family: "Roboto Condensed", sans-serif;
+        font-size: 17px;
+        border: none;
+        background: none;
+        align-items: center;
+        justify-content: center;
+        resize: none;
+        line-height: 20px;
+        height:20px;
+        text-align: center;
+        overflow: hidden;
+        }
     `;
 
     staticProperties = {
@@ -186,7 +188,7 @@ class Weapons extends LitElement {
     constructor() {
         super();
         this.weapons = [];
-        this.addedWeapons = [];
+        this.addedWeapons =  JSON.parse(localStorage.getItem('weapons') || '[]');;
 
     }
 
@@ -208,24 +210,28 @@ class Weapons extends LitElement {
     }
 
     firstUpdated() {
-    this._resizeAllTextareas();
+    this.resizeAllTextareas();
     this.shadowRoot.addEventListener('input', event => {
         if (event.target.tagName === 'TEXTAREA') {
-        this._resizeTextarea(event.target);
+        this.resizeTextarea(event.target);
         }
     });
     }
 
-    _resizeAllTextareas() {
+    resizeAllTextareas() {
     const textareas = this.renderRoot.querySelectorAll('textarea');
     for (const textarea of textareas) {
-        this._resizeTextarea(textarea);
+        this.resizeTextarea(textarea);
     }
     }
 
-    _resizeTextarea(textarea) {
-    textarea.style.height = 'auto';
-    textarea.style.height = `${textarea.scrollHeight}px`;
+    resizeTextarea(textarea) {
+        textarea.style.height = 'auto';
+        const lineHeight = parseInt(window.getComputedStyle(textarea).lineHeight);
+        textarea.style.height = lineHeight + 'px';
+        if (textarea.scrollHeight > lineHeight) {
+            textarea.style.height = textarea.scrollHeight + 'px';
+        }
     }
 
     handleAddWeapon() {
@@ -240,6 +246,7 @@ class Weapons extends LitElement {
             const weaponWithHB = { ...selectedWeapon, hbBonus: 0 };
             this.addedWeapons = [...this.addedWeapons, weaponWithHB];
         }
+        localStorage.setItem('weapons', JSON.stringify(this.addedWeapons));
     }
 
     incrementHB(index) {
@@ -253,6 +260,13 @@ class Weapons extends LitElement {
         updated[index].hbBonus -= 1;
         this.addedWeapons = updated;
     }
+    
+    onStatBlur(e, index, statKey) {
+        const updated = [...this.addedWeapons];
+        updated[index] = { ...updated[index], [statKey]: e.target.value };
+        this.addedWeapons = updated;
+        localStorage.setItem('weapons', JSON.stringify(this.addedWeapons));
+        }
 
     render() {
         return html`
@@ -275,7 +289,7 @@ class Weapons extends LitElement {
                     </span>
                     <span class="damageWrapper">
                     <textarea type="text" class="dmgTextArea" spellcheck="false" .value="${weapon.Vahinko}"></textarea>
-                    <textarea class="dmgType" spellcheck="false" .value="${weapon.Vahinkotyyppi}"></textarea>
+                    <textarea class="dmgTypeTextArea" spellcheck="false" .value="${weapon.Vahinkotyyppi}"></textarea>
                     </span>
                     <textarea class="propertiesTextArea" spellcheck="false" .value="${weapon.Ominaisuudet}"></textarea>
                     <span class="options">

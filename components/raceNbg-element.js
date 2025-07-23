@@ -15,6 +15,11 @@ export class RaceNbg extends LitElement {
         margin-bottom: 0px;
         font-weight: bold;
     }
+    .secondaryTitle{
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-bottom: 5px;
+    }
     .field{
         margin-left: 5px;
         margin-right: 5px;
@@ -44,84 +49,89 @@ export class RaceNbg extends LitElement {
         margin-left: 10px;
     }
     .traitFormWrapper{
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: white;
-            color: black;
-            padding: 0.5rem;
-            text-align: left;
-            z-index: 9999;
-            border-top: solid lightblue 2px;
-            display: flex;
-            flex-direction: column;
-            align-items: left;
-            justify-content: left;
-            box-sizing: border-box
-        }
-        .textbox{
-            font-family: "Roboto Condensed", sans-serif;
-            width: 98%;
-            height: auto;
-            resize: none;
-            margin-right: 10px;
-        }
-        .nimi{
-            max-width: 500px;
-            min-width: 100px;
-        }
-        .formTitle{
-            font-weight: bold;
-            display: flex;
-            flex-direction: row;
-            width: 100%;
-            justify-content: space-between;
-        }
-        .formAddBtn{
-            font-family: "Roboto Condensed", sans-serif;
-            font-size: 15px;
-            font-weight: bold;
-            color: black;
-            margin-top: 5px;
-            border: none;
-            border-radius: 5px;
-            padding: 5px;
-            width: 150px;
-        }
-        .closeBtn{
-            border: none;
-            border-radius: 20px;
-            padding: 0;
-            margin: 0;
-            font-size: 15px;
-            font-weight:bold;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 25px;
-            height: 25px;
-            vertical-align: middle;
-            padding-bottom: 2px;
-            padding-left: 1px;
-            display: flex;
-            justify-self: end;
-        }
-    `
-    static properties = {
-        showAddTrait: { type: Boolean},
-        addedTraits: { type: Array}
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background: white;
+        color: black;
+        padding: 0.5rem;
+        text-align: left;
+        z-index: 9999;
+        border-top: solid lightblue 2px;
+        display: flex;
+        flex-direction: column;
+        align-items: left;
+        justify-content: left;
+        box-sizing: border-box
     }
+    .textbox{
+        font-family: "Roboto Condensed", sans-serif;
+        width: 98%;
+        height: auto;
+        resize: none;
+        margin-right: 10px;
+    }
+    .nimi{
+        max-width: 500px;
+        min-width: 100px;
+    }
+    .formTitle{
+        font-weight: bold;
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        justify-content: space-between;
+    }
+    .formAddBtn{
+        font-family: "Roboto Condensed", sans-serif;
+        font-size: 15px;
+        font-weight: bold;
+        color: black;
+        margin-top: 5px;
+        border: none;
+        border-radius: 5px;
+        padding: 5px;
+        width: 150px;
+    }
+    .closeBtn{
+        border: none;
+        border-radius: 20px;
+        padding: 0;
+        margin: 0;
+        font-size: 15px;
+        font-weight:bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 25px;
+        height: 25px;
+        vertical-align: middle;
+        padding-bottom: 2px;
+        padding-left: 1px;
+        display: flex;
+        justify-self: end;
+    }
+    .desc{
+        margin-left: 10px;
+        border-left: solid lightgray 5px;
+        padding: 5px;
+        display: flex;
+        flex-wrap: wrap;
+        box-sizing: border-box
+    }
+    `
 
     constructor(){
         super();
         this.showAddTrait = false;
+        this.traits = JSON.parse(localStorage.getItem('traits') || '[]');
     }
 
     static get properties(){
         return{
             showAddTrait: { type: Boolean},
-            addedTraits: { type: Array}
+            traits: { type: Array}
         }
     }
 
@@ -131,6 +141,8 @@ export class RaceNbg extends LitElement {
             textarea.style.height = 'auto';
             textarea.style.height = `${textarea.scrollHeight}px`;
         });
+
+        this.traits = JSON.parse(localStorage.getItem('traits') || '[]');
     }
 
     handleShowAddTrait(){
@@ -143,17 +155,24 @@ export class RaceNbg extends LitElement {
                         <button class="closeBtn" @click="${this.closeAddTrait}">X</button>
                     </div>
                     <div>PIIRTEEN NIMI</div>
-                    <div class="nimi"><textarea class="textbox"></textarea></div>
+                    <div class="nimi"><textarea class="textbox" id="traitName"></textarea></div>
                     <div>PIIRTEEN KUVAUS</div>
-                    <div class="desc"><textarea class="textbox"></textarea></div>
-                    <button type="button" class="formAddBtn">LISÄÄ</button>
+                    <div class="traitDesc"><textarea class="textbox" id="traitDesc"></textarea></div>
+                    <button type="button" class="formAddBtn" @click="${this.addTrait}">LISÄÄ</button>
                 </div>
             </div>
             `;
         }
     }
     closeAddTrait(){
-        this.showAddTrait = false
+        this.showAddTrait = false;
+    }
+    addTrait() {
+        const name = this.renderRoot.querySelector('#traitName')?.value ?? '';
+        const desc = this.renderRoot.querySelector('#traitDesc')?.value ?? '';
+        this.traits = [...this.traits, { traitName: name, traitDesc: desc }];
+        localStorage.setItem('traits', JSON.stringify(this.traits));
+        this.showAddTrait = false;
     }
     render(){
         return html`
@@ -168,6 +187,12 @@ export class RaceNbg extends LitElement {
             </section>
             <section>
                 <p class="title">LAJIN PIIRTEET</p>
+                <div>
+                    ${this.traits.map((trait) => html`
+                        <p class="secondaryTitle">${trait.traitName}</p>
+                        <p class="desc">${trait.traitDesc}</p>
+                    `)}
+                </div>
                 <button type="button" @click="${this.handleShowAddTrait}" class="addBtn">+</button>
             </section>
             <section class="wrapper">
