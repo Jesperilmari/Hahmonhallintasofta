@@ -279,7 +279,7 @@ class Weapons extends LitElement {
             <div>
                 ${this.addedWeapons.map((weapon, i) => html`
                 <div class="weaponRow ${i % 2 === 0 ? 'even' : 'odd'}">
-                    <textarea type="text" class="nameTextArea" spellcheck="false" .value="${weapon.Nimi}"></textarea>
+                    <textarea type="text" class="nameTextArea" spellcheck="false" .value="${weapon.Nimi}" @blur="${e => this.onStatBlur(e, i, 'Nimi')}"></textarea>
                     <span class="hbWrapper">
                         <span class="hb">${weapon.hbBonus >= 0 ? '+' : ''}${weapon.hbBonus}</span>
                         <span class="buttonWrapper">
@@ -288,10 +288,10 @@ class Weapons extends LitElement {
                         </span>
                     </span>
                     <span class="damageWrapper">
-                    <textarea type="text" class="dmgTextArea" spellcheck="false" .value="${weapon.Vahinko}"></textarea>
-                    <textarea class="dmgTypeTextArea" spellcheck="false" .value="${weapon.Vahinkotyyppi}"></textarea>
+                    <textarea type="text" class="dmgTextArea" spellcheck="false" .value="${weapon.Vahinko}" @blur="${e => this.onStatBlur(e, i, 'Vahinko')}"></textarea>
+                    <textarea class="dmgTypeTextArea" spellcheck="false" .value="${weapon.Vahinkotyyppi}" @blur="${e => this.onStatBlur(e, i, 'Vahinkotyyppi')}"></textarea>
                     </span>
-                    <textarea class="propertiesTextArea" spellcheck="false" .value="${weapon.Ominaisuudet}"></textarea>
+                    <textarea class="propertiesTextArea" spellcheck="false" .value="${weapon.Ominaisuudet}" @blur="${e => this.onStatBlur(e, i, 'Ominaisuudet')}"></textarea>
                     <span class="options">
                         <img src="../icons/trash.png" class="img">
                     </span>
