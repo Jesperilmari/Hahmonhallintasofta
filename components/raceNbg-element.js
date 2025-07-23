@@ -1,4 +1,5 @@
 import { LitElement, html, css } from 'lit';
+import '../../components/add-trait.js';
 export class RaceNbg extends LitElement {
     static styles = css`
     .wrapper{
@@ -52,11 +53,14 @@ export class RaceNbg extends LitElement {
         super();
         this.showAddTrait = false;
     }
-
     handleShowAddTrait(){
         this.showAddTrait = true;
-        if(showAddTrait){
-            return html``;
+        if(this.showAddTrait){
+            return html`
+                <div>
+                    <add-trait></add-trait>
+                </div>
+            `;
         }
     }
     render(){
@@ -95,6 +99,7 @@ export class RaceNbg extends LitElement {
                 <label for="muuta" class="label">Muuta</label>
                 <input type="text" id="muuta" class="field">
             </section>
+            ${this.showAddTrait ? this.handleShowAddTrait() : ''}
         `;
     }
 }

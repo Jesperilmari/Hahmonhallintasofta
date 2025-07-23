@@ -31,12 +31,12 @@ class Proficiencies extends LitElement {
   };
 
   firstUpdated() {
-  const textarea = this.renderRoot.querySelector('textarea');
-  textarea.addEventListener('input', () => {
-    textarea.style.height = 'auto';
-    textarea.style.height = `${textarea.scrollHeight}px`;
-  });
-}
+    const textarea = this.renderRoot.querySelector('textarea');
+      textarea.addEventListener('input', () => {
+      textarea.style.height = 'auto';
+      textarea.style.height = `${textarea.scrollHeight}px`;
+    });
+  }
   
   render() {
     return html`
