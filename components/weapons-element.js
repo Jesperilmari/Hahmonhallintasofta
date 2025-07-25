@@ -72,6 +72,7 @@ class Weapons extends LitElement {
         justify-content: center;
         resize: none;
         line-height: 20px;
+        min-width: 10px;
         }
     .nameTextArea {
         width: 115px;
@@ -194,6 +195,8 @@ class Weapons extends LitElement {
 
     async connectedCallback() {
         super.connectedCallback();
+        this._onResize = this.resizeAllTextareas.bind(this);
+        window.addEventListener('resize', this._onResize);
         await this.loadCSV();
     }
 
@@ -268,6 +271,13 @@ class Weapons extends LitElement {
         localStorage.setItem('weapons', JSON.stringify(this.addedWeapons));
         }
 
+    deleteWeapon(name){
+        const array = [...this.addedWeapons];
+        const updated = array.filter(weapon => weapon.Nimi !== name)
+        this.addedWeapons = updated;
+        localStorage.setItem('weapons', JSON.stringify(this.addedWeapons));
+    }
+
     render() {
         return html`
             <div class="titlesWrapper">
@@ -293,7 +303,7 @@ class Weapons extends LitElement {
                     </span>
                     <textarea class="propertiesTextArea" spellcheck="false" .value="${weapon.Ominaisuudet}" @blur="${e => this.onStatBlur(e, i, 'Ominaisuudet')}"></textarea>
                     <span class="options">
-                        <img src="../icons/trash.png" class="img">
+                        <img src="../icons/trash.png" class="img" @click="${() => this.deleteWeapon(weapon.Nimi)}">
                     </span>
                 </div>
                 `)}

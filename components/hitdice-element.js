@@ -113,7 +113,7 @@ class HitDice extends LitElement {
         this.showButtonsAc = !this.showButtonsAc;
     }
 
-    _changeAc(i) {
+    changeAc(i) {
         const newAc = this.ac + i;
         this.ac = newAc;
     }

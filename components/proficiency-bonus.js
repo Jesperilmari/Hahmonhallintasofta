@@ -86,7 +86,7 @@ class proficiencyBonus extends LitElement {
   toggleButtons() {
     this.showButtons = !this.showButtons;
   }
-  _changeValue(i) {
+  changeValue(i) {
     this.bonus += i;
 
     this.dispatchEvent(new CustomEvent('proficiency-changed', {
@@ -106,13 +106,13 @@ class proficiencyBonus extends LitElement {
       <div class="wrapper">
         <span class="title">PÄTEVYYS</span>
         <span class="buttonsRow">
-        ${this.showButtons ? html`<button @click=${() => this._changeValue(-1)}>-</button>` : ''}
+        ${this.showButtons ? html`<button @click=${() => this.changeValue(-1)}>-</button>` : ''}
         <span class="bonus ${this.highlight ? 'highlighted' : ''}" 
         @mouseenter="${this.mouseEnter}"
         @mouseleave="${this.mouseLeave}"
         @click="${this.toggleButtons}"
         >+${this.bonus}</span>
-        ${this.showButtons ? html`<button @click=${() => this._changeValue(1)}>+</button>` : ''}
+        ${this.showButtons ? html`<button @click=${() => this.changeValue(1)}>+</button>` : ''}
         </span>
         <span class="title">BONUS</span>
       </div>

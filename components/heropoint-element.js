@@ -76,7 +76,7 @@ class Heropoint extends LitElement {
   toggleButtons() {
     this.showButtons = !this.showButtons;
   }
-  _changeValue(i) {
+  changeValue(i) {
     const newValue = this.heropoint + i;
     this.heropoint = newValue;
   }
@@ -85,7 +85,7 @@ class Heropoint extends LitElement {
     return html`
     <div class="wrapper">
       <span class="heropoint">
-      ${this.showButtons ? html`<button @click=${() => this._changeValue(-1)}>-</button>` : ''}
+      ${this.showButtons ? html`<button @click=${() => this.changeValue(-1)}>-</button>` : ''}
       <div class="value ${this.highlight ? 'highlighted' : ''}"
       @mouseenter="${this.mouseEnter}"
       @mouseleave="${this.mouseLeave}"
@@ -93,7 +93,7 @@ class Heropoint extends LitElement {
       >
         ${this.heropoint}
       </div>
-      ${this.showButtons ? html`<button @click=${() => this._changeValue(1)}>+</button>` : ''}
+      ${this.showButtons ? html`<button @click=${() => this.changeValue(1)}>+</button>` : ''}
       </span>
       <p class="title">SANKARIPISTE</p>
       
