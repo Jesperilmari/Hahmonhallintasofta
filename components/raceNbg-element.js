@@ -143,15 +143,21 @@ export class RaceNbg extends LitElement {
     constructor() {
         super();
         this.showAddTrait = false;
+        this.showAddSpeciality = false;
         this.traits = JSON.parse(localStorage.getItem('traits') || '[]');
+        this.specialities = JSON.parse(localStorage.getItem('specialities') || '[]');
         this.generalInfo = JSON.parse(localStorage.getItem('generalInfo') || '{}');
+        this.background = JSON.parse(localStorage.getItem('background') || '{}');
     }
 
     static get properties() {
         return {
             showAddTrait: { type: Boolean },
+            showAddSpeciality: { type: Boolean},
             traits: { type: Array },
-            generalInfo: { type: Object }
+            specialities: { type: Array },
+            generalInfo: { type: Object },
+            background: { type: Object },
         }
     }
 
@@ -165,27 +171,21 @@ export class RaceNbg extends LitElement {
     }
 
     handleShowAddTrait() {
-        this.showAddTrait = true
-        if (this.showAddTrait) {
-            return html`
-                <div class="traitFormWrapper">
-                    <div class="formTitle">
-                        <div>LISÄÄ PIIRRE</div>
-                        <button class="closeBtn" @click="${this.closeAddTrait}">X</button>
-                    </div>
-                    <div>PIIRTEEN NIMI</div>
-                    <div class="nimi"><textarea class="textbox" id="traitName"></textarea></div>
-                    <div>PIIRTEEN KUVAUS</div>
-                    <div class="traitDesc"><textarea class="textbox" id="traitDesc"></textarea></div>
-                    <button type="button" class="formAddBtn" @click="${this.addTrait}">LISÄÄ</button>
-                </div>
-            </div>
-            `;
-        }
+        this.showAddTrait = true;
     }
+
+    handleShowAddSpeciality() {
+        this.showAddSpeciality = true;
+    }
+
     closeAddTrait() {
         this.showAddTrait = false;
     }
+
+    closeAddSpeciality() {
+        this.showAddSpeciality = false;
+    }
+
     addTrait() {
         const name = this.renderRoot.querySelector('#traitName')?.value ?? '';
         const desc = this.renderRoot.querySelector('#traitDesc')?.value ?? '';
@@ -194,11 +194,26 @@ export class RaceNbg extends LitElement {
         this.showAddTrait = false;
     }
 
+    addSpeciality() {
+        const name = this.renderRoot.querySelector('#specialityName')?.value ?? '';
+        const desc = this.renderRoot.querySelector('#specialityDesc')?.value ?? '';
+        this.specialities = [...this.specialities, { specialityName: name, specialityDesc: desc }];
+        localStorage.setItem('specialities', JSON.stringify(this.specialities));
+        this.showAddSpeciality = false;
+    }
+
     deleteTrait(name) {
         const array = [...this.traits];
         const updated = array.filter(trait => trait.traitName !== name)
         this.traits = updated
         localStorage.setItem('traits', JSON.stringify(this.traits))
+    }
+
+    deleteSpeciality(name) {
+        const array = [...this.specialities];
+        const updated = array.filter(speciality => speciality.specialityName !== name)
+        this.specialities = updated
+        localStorage.setItem('specialities', JSON.stringify(this.specialities))
     }
 
     resizeAllTextareas() {
@@ -225,16 +240,24 @@ export class RaceNbg extends LitElement {
         localStorage.setItem('generalInfo', JSON.stringify(this.generalInfo));
     }
 
+    onBackgroundBlur(id, value) {
+        this.background = {
+            ...this.background,
+            [id]: value
+        };
+        localStorage.setItem('background', JSON.stringify(this.background));
+    }
+
     render() {
         return html`
             <section class="wrapper">
                 <p class="title">YLEISTIETO</p>
                 <label for="name" class="label">Nimi</label>
-                <textarea id="name" class="field" @blur="${e => this.onGeneralInfoBlur(e.target.id, e.target.value)}" .value="${this.generalInfo.name}"></textarea>
+                <textarea id="name" class="field" spellcheck="false" @blur="${e => this.onGeneralInfoBlur(e.target.id, e.target.value)}" .value="${this.generalInfo.name || ''}"></textarea>
                 <label for="alignment" class="label">Vakaumus</label>
-                <textarea id="alignment" class="field" @blur="${e => this.onGeneralInfoBlur(e.target.id, e.target.value)}" .value="${this.generalInfo.alignment}"></textarea>
+                <textarea id="alignment" class="field" spellcheck="false" @blur="${e => this.onGeneralInfoBlur(e.target.id, e.target.value)}" .value="${this.generalInfo.alignment || ''}"></textarea>
                 <label for="race" class="label">Laji</label>
-                <textarea id="race" class="field" @blur="${e => this.onGeneralInfoBlur(e.target.id, e.target.value)}" .value="${this.generalInfo.race}"></textarea>
+                <textarea id="race" class="field" spellcheck="false" @blur="${e => this.onGeneralInfoBlur(e.target.id, e.target.value)}" .value="${this.generalInfo.race || ''}"></textarea>
             </section>
             <section>
                 <p class="title">LAJIN PIIRTEET</p>
@@ -251,16 +274,28 @@ export class RaceNbg extends LitElement {
             </section>
             <section class="wrapper">
                 <p class="title">TAUSTA</p>
+                <textarea id="tausta" class="field" spellcheck="false" @blur="${e => this.onBackgroundBlur(e.target.id, e.target.value)}" .value="${this.background.tausta || ''}"></textarea>
+                <p class="title">ERIKOISUUS</p>
+                <div>
+                    ${this.specialities.map((speciality) => html`
+                        <p class="secondaryTitle">${speciality.specialityName}</p>
+                        <div class="traitRow">
+                            <p class="desc">${speciality.specialityDesc}</p>
+                            <img src="../icons/trash.png" class="img" @click="${() => this.deleteSpeciality(speciality.specialityName)}">
+                        </div>
+                    `)}
+                </div>
+                <button type="button" @click="${this.handleShowAddSpeciality}" class="addBtn">+</button>
                 <label for="luonne" class="label">Luonteenpiirre</label>
-                <textarea id="luonne" class="field"></textarea>
+                <textarea id="luonne" class="field" spellcheck="false" @blur="${e => this.onBackgroundBlur(e.target.id, e.target.value)}" .value="${this.background.luonne || ''}"></textarea>
                 <label for="ihanne" class="label">Ihanne</label>
-                <textarea id="ihanne" class="field"></textarea>
+                <textarea id="ihanne" class="field" spellcheck="false" @blur="${e => this.onBackgroundBlur(e.target.id, e.target.value)}" .value="${this.background.ihanne || ''}"></textarea>
                 <label for="side" class="label">Side</label>
-                <textarea id="side" class="field"></textarea>
+                <textarea id="side" class="field" spellcheck="false" @blur="${e => this.onBackgroundBlur(e.target.id, e.target.value)}" .value="${this.background.side || ''}"></textarea>
                 <label for="heikkous" class="label">Heikkous</label>
-                <textarea id="heikkous" class="field"></textarea>
+                <textarea id="heikkous" class="field" spellcheck="false" @blur="${e => this.onBackgroundBlur(e.target.id, e.target.value)}" .value="${this.background.heikkous || ''}"></textarea>
                 <label for="muuta" class="label">Muuta</label>
-                <textarea id="muuta" class="field"></textarea>
+                <textarea id="muuta" class="field" spellcheck="false" @blur="${e => this.onBackgroundBlur(e.target.id, e.target.value)}" .value="${this.background.muuta || ''}"></textarea>
             </section>
             <section class="wrapper">
                 <p class="title">ULKONÄKÖ</p>
@@ -283,7 +318,33 @@ export class RaceNbg extends LitElement {
                 <label for="muuta" class="label">Muuta</label>
                 <textarea type="text" id="muuta" class="field"></textarea>
             </section>
-            ${this.showAddTrait ? this.handleShowAddTrait() : ''}
+            ${this.showAddTrait ? html`
+            <div class="traitFormWrapper">
+                <div class="formTitle">
+                <div>LISÄÄ PIIRRE</div>
+                <button class="closeBtn" @click="${this.closeAddTrait}">X</button>
+                </div>
+                <div>PIIRTEEN NIMI</div>
+                <div class="nimi"><textarea class="textbox" id="traitName"></textarea></div>
+                <div>PIIRTEEN KUVAUS</div>
+                <div class="traitDesc"><textarea class="textbox" id="traitDesc"></textarea></div>
+                <button type="button" class="formAddBtn" @click="${this.addTrait}">LISÄÄ</button>
+            </div>
+            ` : ''}
+
+            ${this.showAddSpeciality ? html`
+            <div class="traitFormWrapper">
+                <div class="formTitle">
+                <div>LISÄÄ ERIKOISUUS</div>
+                <button class="closeBtn" @click="${this.closeAddSpeciality}">X</button>
+                </div>
+                <div>ERIKOISUUDEN NIMI</div>
+                <div class="nimi"><textarea class="textbox" id="specialityName"></textarea></div>
+                <div>ERIKOISUUDEN KUVAUS</div>
+                <div class="traitDesc"><textarea class="textbox" id="specialityDesc"></textarea></div>
+                <button type="button" class="formAddBtn" @click="${this.addSpeciality}">LISÄÄ</button>
+            </div>
+            ` : ''}
         `;
     }
 }
