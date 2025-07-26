@@ -163,12 +163,12 @@ character-tabs {
     render() {
         return html`
       <div class="firstRow">
-        <character-attribute name="VOIMAKKUUS" value="15" id="VOIM"></character-attribute>
-        <character-attribute name="KETTERYYS" value="6" id="KET"></character-attribute>
-        <character-attribute name="SITKEYS" value="9" id="SITK"></character-attribute>
-        <character-attribute name="ÄLYKKYYS" value="27" id="ÄLY"></character-attribute>
+        <character-attribute name="VOIMAKKUUS" value="10" id="VOIM"></character-attribute>
+        <character-attribute name="KETTERYYS" value="10" id="KET"></character-attribute>
+        <character-attribute name="SITKEYS" value="10" id="SITK"></character-attribute>
+        <character-attribute name="ÄLYKKYYS" value="10" id="ÄLY"></character-attribute>
         <character-attribute name="VIISAUS" value="10" id="VIIS"></character-attribute>
-        <character-attribute name="KARISMA" value="18" id="KAR"></character-attribute>
+        <character-attribute name="KARISMA" value="10" id="KAR"></character-attribute>
         <proficiency-bonus></proficiency-bonus>
         <speed-element></speed-element>
         <heropoint-element></heropoint-element>
