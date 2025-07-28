@@ -229,10 +229,7 @@ character-tabs {
                 <senses-element></senses-element>
             </div>
             <div class="proficienciesWrapper">
-                <proficiencies-element title="ASEPÄTEVYYDET"></proficiencies-element>
-                <proficiencies-element title="HAARNISKAPÄTEVYYDET"></proficiencies-element>
-                <proficiencies-element title="KIELET"></proficiencies-element>
-                <proficiencies-element title="TYÖKALUPÄTEVYYDET"></proficiencies-element>
+                <proficiencies-element></proficiencies-element>
             </div>
         </div>
         <div class="secondRowThirdClmn">

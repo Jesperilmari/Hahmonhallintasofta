@@ -1,49 +1,106 @@
 import { LitElement, html, css } from 'lit-element';
 
 class Proficiencies extends LitElement {
-
   static styles = css`
-  .wrapper{
-    display: flex;
-    flex-direction: column;
-    margin-top: 10px;
-  }
-  .title{
-    font-weight: bold;
-    color: #696969;
-  }
-  .proficiencies{
-    border-bottom: 1px solid gray;
-    margin-top: 5px;
-    margin-bottom: 5px;
-  }
-  .textbox{
-    font-family: "Roboto Condensed", sans-serif;
-    border: none;
-    width: 100%;
-    min-height: 1px;
-    max-height: 150px;
-    height: auto;
-    resize: none;
-  }
+    .wrapper {
+      display: flex;
+      flex-direction: column;
+      margin-top: 10px;
+    }
+    .title {
+      font-weight: bold;
+      color: #696969;
+    }
+    .proficiencies {
+      border-bottom: 1px solid gray;
+      margin-top: 5px;
+      margin-bottom: 5px;
+    }
+    .textbox {
+      font-family: "Roboto Condensed", sans-serif;
+      border: none;
+      width: 100%;
+      min-height: 1px;
+      height: auto;
+      resize: none;
+      overflow: hidden;
+      line-height: 25px;
+      box-sizing: border-box;
+    }
   `;
-  static properties = {
-  };
 
-  firstUpdated() {
+  static get properties() {
+    return {
+      title: { type: String },
+      proficiencies: { type: Object },
+    };
+  }
+
+  constructor() {
+    super();
+    const defaults = {
+    ASEPÄTEVYYDET: '',
+    HAARNISKAPÄTEVYYDET: '',
+    KIELET: '',
+    TYÖKALUPÄTEVYYDET: ''
+  };
+    const saved = JSON.parse(localStorage.getItem('proficiencies') || '{}');
+    this.proficiencies = { ...defaults, ...saved };
+  }
+
+  updated() {
     const textarea = this.renderRoot.querySelector('textarea');
-      textarea.addEventListener('input', () => {
-      textarea.style.height = 'auto';
-      textarea.style.height = `${textarea.scrollHeight}px`;
+    if (textarea) {
+      this.autoResize(textarea);
+    }
+  }
+
+  autoResize(textarea) {
+    textarea.style.height = 'auto';
+    textarea.style.height = `${textarea.scrollHeight}px`;
+  }
+
+  save(title, value) {
+    this.proficiencies = {
+      ...this.proficiencies,
+      [title]: value,
+    };
+    localStorage.setItem('proficiencies', JSON.stringify(this.proficiencies));
+  }
+
+  handleInput(e) {
+    this.autoResize(e.target);
+  }
+
+  updated() {
+    this.updateComplete.then(() => {
+      const textarea = this.renderRoot.querySelector('textarea');
+      if (textarea) {
+        this.autoResize(textarea);
+      }
     });
   }
-  
+
   render() {
     return html`
-      <div class="wrapper">
-        <span class="title">${this.title}</span>
-        <div class="proficiencies"><textarea class="textbox"></textarea></div>
-      </div>
+      ${Object.entries(this.proficiencies).map(
+        ([title, value]) => html`
+          <div class="wrapper">
+            <span class="title">${title}</span>
+            <div class="proficiencies">
+              <textarea
+                class="textbox"
+                spellcheck="false"
+                .value=${value}
+                @input=${e => {
+                  this.autoResize(e.target);
+                  this.save(title, e.target.value);
+                }}
+              ></textarea>
+            </div>
+          </div>
+        `
+      )}
     `;
   }
 }
