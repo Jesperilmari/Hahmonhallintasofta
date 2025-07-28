@@ -114,6 +114,9 @@ class CharacterAttribute extends LitElement {
     super();
     this.highlight = false;
     this.showButtons = false;
+
+    const savedValue = localStorage.getItem(`character-attribute-${this.name}`);
+    this.value = savedValue !== null ? Number(savedValue) : 10;
   }
 
   firstUpdated() {
@@ -140,10 +143,11 @@ class CharacterAttribute extends LitElement {
   }
 
   changeValue(i) {
-    const newValue = this.value + i;
-    if (newValue >= 1 && newValue <= 30) {
-      this.value = newValue;
-    }
+  const newValue = this.value + i;
+  if (newValue >= 1 && newValue <= 30) {
+    this.value = newValue;
+    localStorage.setItem(`character-attribute-${this.name}`, String(this.value));
+    
     this.dispatchEvent(new CustomEvent('modifier-changed', {
       bubbles: true,
       composed: true,
@@ -154,10 +158,20 @@ class CharacterAttribute extends LitElement {
       }
     }));
   }
+}
 
   getModifier() {
     let modifier = CharacterAttribute.modifiers[this.value]
     return (modifier)
+  }
+
+  willUpdate(changedProps) {
+    if (changedProps.has('name')) {
+      const savedValue = localStorage.getItem(`character-attribute-${this.name}`);
+      if (savedValue !== null) {
+        this.value = Number(savedValue);
+      }
+    }
   }
 
   render() {
