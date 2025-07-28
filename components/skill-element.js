@@ -82,45 +82,45 @@ class Skill extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    window.addEventListener('attributes-ready', this._updateBaseModifier);
-    window.addEventListener('modifier-changed', this._onModifierChanged);
-    window.addEventListener('proficiency-changed', this._onProficiencyChanged);
+    window.addEventListener('attributes-ready', this.updateBaseModifier);
+    window.addEventListener('modifier-changed', this.onModifierChanged);
+    window.addEventListener('proficiency-changed', this.onProficiencyChanged);
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    window.removeEventListener('attributes-ready', this._updateBaseModifier);
-    window.removeEventListener('modifier-changed', this._onModifierChanged);
-    window.removeEventListener('proficiency-changed', this._onProficiencyChanged);
+    window.removeEventListener('attributes-ready', this.updateBaseModifier);
+    window.removeEventListener('modifier-changed', this.onModifierChanged);
+    window.removeEventListener('proficiency-changed', this.onProficiencyChanged);
   }
 
   firstUpdated() {
-    this._updateBaseModifier();
+    this.updateBaseModifier();
   }
 
-  _updateBaseModifier = () => {
+  updateBaseModifier = () => {
     const attrEl = document.querySelector(`#${this.attr}`);
     if (attrEl && typeof attrEl.getModifier === 'function') {
       this.baseModifier = attrEl.getModifier();
-      this._recalculateBonus();
+      this.recalculateBonus();
     } else {
       console.warn(`Skill Element: No attribute element found with id ${this.attr}`);
     }
   };
 
-  _onModifierChanged = (e) => {
+  onModifierChanged = (e) => {
     if (e.detail.attr === this.attr) {
       this.baseModifier = e.detail.modifier;
-      this._recalculateBonus();
+      this.recalculateBonus();
     }
   };
 
-  _onProficiencyChanged = (e) => {
+  onProficiencyChanged = (e) => {
     this.proficiencyBonus = e.detail.value;
-    this._recalculateBonus();
+    this.recalculateBonus();
   };
 
-  _recalculateBonus() {
+  recalculateBonus() {
     const modifier = Number(this.baseModifier);
     const proficiencyBonus = Number(this.proficiencyBonus);
     this.bonus = modifier + (this.toggleProficiency ? proficiencyBonus : 0);
@@ -136,7 +136,7 @@ class Skill extends LitElement {
 
   clickProficiencyBtn() {
     this.toggleProficiency = !this.toggleProficiency;
-    this._recalculateBonus();
+    this.recalculateBonus();
   }
 
   render() {

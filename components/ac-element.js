@@ -122,12 +122,12 @@ class Armorclass extends LitElement {
         this.showButtonsShield = !this.showButtonsShield;
     }
 
-    _changeAc(i) {
+    changeAc(i) {
         const newAc = this.ac + i;
         this.ac = newAc;
     }
 
-    _changeShield(i) {
+    changeShield(i) {
         const newShield = this.shield + i;
         this.shield = newShield;
     }
@@ -138,27 +138,27 @@ class Armorclass extends LitElement {
         <div class="acBorder">
             <span class="title">PUOLUSTUS</span>
             <span class="buttonPos">
-            ${this.showButtonsAc ? html`<button @click=${() => this._changeAc(-1)}>-</button>` : ''}
+            ${this.showButtonsAc ? html`<button @click=${() => this.changeAc(-1)}>-</button>` : ''}
             <span class="ac ${this.highlightAc ? 'highlighted' : ''}"
             @mouseenter="${this.mouseEnterAc}"
             @mouseleave="${this.mouseLeaveAc}"
             @click="${this.toggleButtonsAc}"
             >
             ${this.ac}</span>
-            ${this.showButtonsAc ? html`<button @click=${() => this._changeAc(1)}>+</button>` : ''}
+            ${this.showButtonsAc ? html`<button @click=${() => this.changeAc(1)}>+</button>` : ''}
             </span>
         </div>
         <div class="acBorder">
             <span class="title">KILVELLÄ</span>
             <span class="buttonPos">
-            ${this.showButtonsShield ? html`<button @click=${() => this._changeShield(-1)}>-</button>` : ''}
+            ${this.showButtonsShield ? html`<button @click=${() => this.changeShield(-1)}>-</button>` : ''}
             <span class="shield ${this.highlightShield ? 'highlighted' : ''}"
             @mouseenter="${this.mouseEnterShield}"
             @mouseleave="${this.mouseLeaveShield}"
             @click="${this.toggleButtonsShield}"
             >
             ${this.shield}</span>
-            ${this.showButtonsShield ? html`<button @click=${() => this._changeShield(1)}>+</button>` : ''}
+            ${this.showButtonsShield ? html`<button @click=${() => this.changeShield(1)}>+</button>` : ''}
             </span>
         </div>
     </div>

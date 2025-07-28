@@ -77,7 +77,7 @@ class speed extends LitElement {
   toggleButtons() {
     this.showButtons = !this.showButtons;
   }
-  _changeValue(i) {
+  changeValue(i) {
     const newValue = this.speed + i;
     this.speed = newValue;
   }
@@ -87,14 +87,14 @@ class speed extends LitElement {
       <div class="wrapper">
         <span class="title">NOPEUS</span>
         <span class="buttonsRow">
-          ${this.showButtons ? html`<button @click=${() => this._changeValue(-1)}>-</button>` : ''}
+          ${this.showButtons ? html`<button @click=${() => this.changeValue(-1)}>-</button>` : ''}
           <span class="speed ${this.highlight ? 'highlighted' : ''}"
           @mouseenter="${this.mouseEnter}"
           @mouseleave="${this.mouseLeave}"
           @click="${this.toggleButtons}"
           >
           ${this.speed}m</span>
-          ${this.showButtons ? html`<button @click=${() => this._changeValue(1)}>+</button>` : ''}
+          ${this.showButtons ? html`<button @click=${() => this.changeValue(1)}>+</button>` : ''}
         </span>
         <span class="title">KÄVELLEN</span>
       </div>
