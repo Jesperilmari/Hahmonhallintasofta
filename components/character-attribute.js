@@ -139,7 +139,7 @@ class CharacterAttribute extends LitElement {
     this.showButtons = !this.showButtons;
   }
 
-  _changeValue(i) {
+  changeValue(i) {
     const newValue = this.value + i;
     if (newValue >= 1 && newValue <= 30) {
       this.value = newValue;
@@ -165,7 +165,7 @@ class CharacterAttribute extends LitElement {
         <div class="attributeWrapper">
             <p><span class="name">${this.name}</span></p>
             <span class="attributeAddRemove">
-              ${this.showButtons ? html`<button @click=${() => this._changeValue(-1)}>-</button>` : ''}
+              ${this.showButtons ? html`<button @click=${() => this.changeValue(-1)}>-</button>` : ''}
               <span
                   class="value ${this.highlight ? 'highlighted' : ''}" 
                   @mouseenter="${this.mouseEnterAtribute}" 
@@ -174,7 +174,7 @@ class CharacterAttribute extends LitElement {
               >
                 ${this.value}
               </span>
-              ${this.showButtons ? html`<button @click=${() => this._changeValue(1)}>+</button>` : ''}
+              ${this.showButtons ? html`<button @click=${() => this.changeValue(1)}>+</button>` : ''}
             </span>
             <span class="modifier">${this.getModifier()}</span>
         </div>
