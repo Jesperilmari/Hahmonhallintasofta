@@ -148,6 +148,7 @@ export class RaceNbg extends LitElement {
         this.specialities = JSON.parse(localStorage.getItem('specialities') || '[]');
         this.generalInfo = JSON.parse(localStorage.getItem('generalInfo') || '{}');
         this.background = JSON.parse(localStorage.getItem('background') || '{}');
+        this.appearance = JSON.parse(localStorage.getItem('appearance') || '{}');
     }
 
     static get properties() {
@@ -158,6 +159,7 @@ export class RaceNbg extends LitElement {
             specialities: { type: Array },
             generalInfo: { type: Object },
             background: { type: Object },
+            appearance: { type: Object}
         }
     }
 
@@ -247,6 +249,13 @@ export class RaceNbg extends LitElement {
         };
         localStorage.setItem('background', JSON.stringify(this.background));
     }
+    onAppearanceBlur(id, value) {
+        this.appearance = {
+            ...this.appearance,
+            [id]: value
+        };
+        localStorage.setItem('appearance', JSON.stringify(this.appearance));
+    }
 
     render() {
         return html`
@@ -300,23 +309,23 @@ export class RaceNbg extends LitElement {
             <section class="wrapper">
                 <p class="title">ULKONÄKÖ</p>
                 <label for="ikä" class="label">Ikä</label>
-                <textarea type="text" id="ikä" class="field"></textarea>
+                <textarea type="text" id="ikä" class="field" spellcheck="false" @blur="${e => this.onAppearanceBlur(e.target.id, e.target.value)}" .value="${this.appearance.ikä || ''}"></textarea>
                 <label for="pituus" class="label">Pituus</label>
-                <textarea type="text" id="pituus" class="field"></textarea>
+                <textarea type="text" id="pituus" class="field" spellcheck="false" @blur="${e => this.onAppearanceBlur(e.target.id, e.target.value)}" .value="${this.appearance.pituus || ''}"></textarea>
                 <label for="paino" class="label">Paino</label>
-                <textarea type="text" id="paino" class="field"></textarea>
+                <textarea type="text" id="paino" class="field" spellcheck="false" @blur="${e => this.onAppearanceBlur(e.target.id, e.target.value)}" .value="${this.appearance.paino || ''}"></textarea>
                 <label for="silmät" class="label">Silmät</label>
-                <textarea type="text" id="silmät" class="field"></textarea>
+                <textarea type="text" id="silmät" class="field" spellcheck="false" @blur="${e => this.onAppearanceBlur(e.target.id, e.target.value)}" .value="${this.appearance.silmät || ''}"></textarea>
                 <label for="hiukset" class="label">Hiukset</label>
-                <textarea type="text" id="hiukset" class="field"></textarea>
+                <textarea type="text" id="hiukset" class="field" spellcheck="false" @blur="${e => this.onAppearanceBlur(e.target.id, e.target.value)}" .value="${this.appearance.hiukset || ''}"></textarea>
                 <label for="iho" class="label">Iho</label>
-                <textarea type="text" id="iho" class="field"></textarea>
+                <textarea type="text" id="iho" class="field" spellcheck="false" @blur="${e => this.onAppearanceBlur(e.target.id, e.target.value)}" .value="${this.appearance.iho || ''}"></textarea>
                 <label for="tuntomerkit" class="label">Tuntomerkit</label>
-                <textarea type="text" id="tuntomerkit" class="field"></textarea>
+                <textarea type="text" id="tuntomerkit" class="field" spellcheck="false" @blur="${e => this.onAppearanceBlur(e.target.id, e.target.value)}" .value="${this.appearance.tuntomerkit || ''}"></textarea>
                 <label for="vaatetus" class="label">Vaatetus</label>
-                <textarea type="text" id="vaatetus" class="field"></textarea>
+                <textarea type="text" id="vaatetus" class="field" spellcheck="false" @blur="${e => this.onAppearanceBlur(e.target.id, e.target.value)}" .value="${this.appearance.vaatetus || ''}"></textarea>
                 <label for="muuta" class="label">Muuta</label>
-                <textarea type="text" id="muuta" class="field"></textarea>
+                <textarea type="text" id="muuta" class="field" spellcheck="false" @blur="${e => this.onAppearanceBlur(e.target.id, e.target.value)}" .value="${this.appearance.muuta || ''}"></textarea>
             </section>
             ${this.showAddTrait ? html`
             <div class="traitFormWrapper">
