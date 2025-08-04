@@ -64,7 +64,7 @@ class Heropoint extends LitElement {
   constructor() {
     super();
     this.highlight = false;
-    this.heropoint = 1;
+    this.heropoint = JSON.parse(localStorage.getItem('heropoint') || '1');
     this.showButtons = false;
   }
   mouseEnter() {
@@ -79,6 +79,7 @@ class Heropoint extends LitElement {
   changeValue(i) {
     const newValue = this.heropoint + i;
     this.heropoint = newValue;
+    localStorage.setItem('heropoint', JSON.stringify(this.heropoint));
   }
 
   render() {
