@@ -48,13 +48,6 @@ class Proficiencies extends LitElement {
     this.proficiencies = { ...defaults, ...saved };
   }
 
-  updated() {
-    const textarea = this.renderRoot.querySelector('textarea');
-    if (textarea) {
-      this.autoResize(textarea);
-    }
-  }
-
   autoResize(textarea) {
     textarea.style.height = 'auto';
     textarea.style.height = `${textarea.scrollHeight}px`;
@@ -66,20 +59,32 @@ class Proficiencies extends LitElement {
       [title]: value,
     };
     localStorage.setItem('proficiencies', JSON.stringify(this.proficiencies));
+    this.resizeAllTextareas()
   }
 
   handleInput(e) {
     this.autoResize(e.target);
   }
 
-  updated() {
-    this.updateComplete.then(() => {
-      const textarea = this.renderRoot.querySelector('textarea');
-      if (textarea) {
-        this.autoResize(textarea);
-      }
-    });
+  firstUpdated() {
+    this.resizeAllTextareas();
   }
+
+  resizeAllTextareas() {
+        const textareas = this.renderRoot.querySelectorAll('textarea');
+        for (const textarea of textareas) {
+            this.resizeTextarea(textarea);
+        }
+    }
+
+    resizeTextarea(textarea) {
+        textarea.style.height = 'auto';
+        const lineHeight = parseInt(window.getComputedStyle(textarea).lineHeight);
+        textarea.style.height = lineHeight + 'px';
+        if (textarea.scrollHeight > lineHeight) {
+            textarea.style.height = textarea.scrollHeight + 'px';
+        }
+    }
 
   render() {
     return html`
