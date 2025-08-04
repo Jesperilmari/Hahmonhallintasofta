@@ -94,8 +94,8 @@ class Armorclass extends LitElement {
         super();
         this.highlightAc = false;
         this.highlightShield = false;
-        this.ac = 10;
-        this.shield = 12;
+        this.ac = JSON.parse(localStorage.getItem('ac') || '10');
+        this.shield = JSON.parse(localStorage.getItem('shield') || '12');
         this.showButtonsAc = false;
         this.showButtonsShield = false;
     }
@@ -125,11 +125,13 @@ class Armorclass extends LitElement {
     changeAc(i) {
         const newAc = this.ac + i;
         this.ac = newAc;
+        localStorage.setItem('ac', JSON.stringify(this.ac));
     }
 
     changeShield(i) {
         const newShield = this.shield + i;
         this.shield = newShield;
+        localStorage.setItem('shield', JSON.stringify(this.shield));
     }
 
     render() {
