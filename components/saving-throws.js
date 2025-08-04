@@ -70,7 +70,7 @@ class SavingThrows extends LitElement {
       background-color: black;
     }
   `;
-  static properties = {
+    static properties = {
     name: { type: String },
     attr: { type: String },
     bonus: { type: Number, state: true },
@@ -105,6 +105,8 @@ class SavingThrows extends LitElement {
 
   firstUpdated() {
     this.updateBaseModifier();
+    this.toggleProficiency = this.loadProficiencyState(this.attr);
+    this.recalculateBonus();
   }
 
   updateBaseModifier = () => {
@@ -143,9 +145,21 @@ class SavingThrows extends LitElement {
     this.highlightProficiency = false;
   }
 
+  saveProficiencyState(attr, value) {
+    const stored = JSON.parse(localStorage.getItem('savingThrows')) || {};
+    stored[attr] = value;
+    localStorage.setItem('savingThrows', JSON.stringify(stored));
+  }
+
+  loadProficiencyState(attr) {
+    const stored = JSON.parse(localStorage.getItem('savingThrows')) || {};
+    return stored[attr] ?? false;
+  }
+
   clickProficiencyBtn() {
     this.toggleProficiency = !this.toggleProficiency;
     this.recalculateBonus();
+    this.saveProficiencyState(this.attr, this.toggleProficiency);
   }
 
   render() {
@@ -163,15 +177,15 @@ class SavingThrows extends LitElement {
               @mouseenter=${this.mouseEnterProficiencyBtn}
               @mouseleave=${this.mouseLeaveProficiencyBtn}
               @click=${this.clickProficiencyBtn}
-              title="Toggle proficiency"
-></span>  
-            <p class="ominausuusTitle">${this.attr}</p>
+            ></span>  
+            <p class="ominaisuusTitle">${this.attr}</p>
             <span class="modifier">${this.bonus >= 0 ? `+${this.bonus}` : this.bonus}</span>
           </div>
         </div>
+      </div>
     </div>
-  </div>
     `;
   }
 }
+
 customElements.define('savingthrows-element', SavingThrows);

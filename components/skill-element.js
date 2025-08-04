@@ -96,6 +96,8 @@ class Skill extends LitElement {
 
   firstUpdated() {
     this.updateBaseModifier();
+    this.toggleProficiency = this.loadProficiencyState(this.name);
+    this.recalculateBonus();
   }
 
   updateBaseModifier = () => {
@@ -137,6 +139,17 @@ class Skill extends LitElement {
   clickProficiencyBtn() {
     this.toggleProficiency = !this.toggleProficiency;
     this.recalculateBonus();
+    this.saveProficiencyState(this.name, this.toggleProficiency);
+  }
+
+  saveProficiencyState(name, value) {
+    const stored = JSON.parse(localStorage.getItem('skills')) || {};
+    stored[name] = value;
+    localStorage.setItem('skills', JSON.stringify(stored));
+  }
+  loadProficiencyState(name) {
+    const stored = JSON.parse(localStorage.getItem('skills')) || {};
+    return stored[name] ?? false;
   }
 
   render() {
