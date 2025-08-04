@@ -65,7 +65,7 @@ class speed extends LitElement {
   constructor() {
     super();
     this.highlight = false;
-    this.speed = 12;
+    this.speed = JSON.parse(localStorage.getItem('speed') || '12');
   }
 
   mouseEnter() {
@@ -80,6 +80,7 @@ class speed extends LitElement {
   changeValue(i) {
     const newValue = this.speed + i;
     this.speed = newValue;
+    localStorage.setItem('speed', JSON.stringify(this.speed));
   }
 
   render() {

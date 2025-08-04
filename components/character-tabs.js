@@ -15,7 +15,7 @@ class CharacterTabs extends LitElement {
         padding: 0;
         margin: 0;
         width: 100%;
-        height: 890px;
+        height: 878px;
         max-width: 1075px;
         display: flex;
         flex-direction: column;

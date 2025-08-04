@@ -222,10 +222,10 @@ class Weapons extends LitElement {
     }
 
     resizeAllTextareas() {
-    const textareas = this.renderRoot.querySelectorAll('textarea');
-    for (const textarea of textareas) {
-        this.resizeTextarea(textarea);
-    }
+        const textareas = this.renderRoot.querySelectorAll('textarea');
+        for (const textarea of textareas) {
+            this.resizeTextarea(textarea);
+        }
     }
 
     resizeTextarea(textarea) {
@@ -250,6 +250,7 @@ class Weapons extends LitElement {
             this.addedWeapons = [...this.addedWeapons, weaponWithHB];
         }
         localStorage.setItem('weapons', JSON.stringify(this.addedWeapons));
+        this.resizeAllTextareas();
     }
 
     incrementHB(index) {

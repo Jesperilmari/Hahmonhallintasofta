@@ -65,7 +65,7 @@ class proficiencyBonus extends LitElement {
   constructor() {
     super();
     this.highlight = false;
-    this.bonus = JSON.parse(localStorage.getItem('proficiencyBonus') || '2');;
+    this.bonus = JSON.parse(localStorage.getItem('proficiencyBonus') || '2');
     this.showButtons = false;
   }
   
