@@ -313,8 +313,8 @@ class Weapons extends LitElement {
                 <select class="weaponsDropDown" id="weapons">
                     <option value="default" disabled selected>Lisää ase</option>
                     ${this.weapons.map(
-            weapon => html`<option class="dropdownOption" value="${weapon.Nimi}">${weapon.Nimi}</option>`
-        )}
+                        weapon => html`<option class="dropdownOption" value="${weapon.Nimi}">${weapon.Nimi}</option>`
+                    )}
                 </select>
                 <button type="button" @click="${this.handleAddWeapon}" class="addBtn">+</button>
             </div>

@@ -52,6 +52,7 @@ class CharacterSheet extends LitElement {
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
+    
 }
 
 .skilltitles {
@@ -91,7 +92,6 @@ class CharacterSheet extends LitElement {
     align-items: flex-start;
     width: 100%;
     box-sizing: border-box;
-    gap: 10px;
 }
 
 .proficienciesWrapper {
@@ -125,10 +125,11 @@ class CharacterSheet extends LitElement {
 .secondRowThirdClmn{
     flex: 1 1 300px;
     max-width: 1075px;
-    min-width: 310px;
+    min-width: 440px;
     height: 890px;
     box-sizing: border-box;
     margin-top: 20px;
+    padding-right: 10px;
 }
 character-tabs {
   flex-grow: 1;
