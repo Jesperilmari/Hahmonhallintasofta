@@ -3,8 +3,8 @@ import { LitElement, html, css } from 'lit-element';
 class senses extends LitElement {
 
   static styles = css`
-  .border{
-    display:flex;
+  .border {
+    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -14,8 +14,8 @@ class senses extends LitElement {
     font-family: "Roboto Condensed", sans-serif;
     width: 300px;
   }
-  .wrapper{
-    display:flex;
+  .wrapper {
+    display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
@@ -26,8 +26,8 @@ class senses extends LitElement {
     margin-bottom: 3px;
     transform: translateX(+6%);
   }
-  .title{
-    width:220px;
+  .title {
+    width: 220px;
     border: 3px solid lightblue;
     background-color: white;
     border-radius: 10px;
@@ -38,54 +38,69 @@ class senses extends LitElement {
     padding-left: 5px;
     padding-right: 20px; 
   }
-  .num{
+  .num {
     border: 3px solid #add8e6;
     background-color: white;
     border-radius: 40px;
     width: 60px;
-    height: 35px;
-    display:flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
+    height: 40px;
     font-size: 20px;
+    font-family: "Roboto Condensed", sans-serif;
+    line-height: 30px;
+    text-align: center;
+    font-weight: bold;
+    resize: none;
+    overflow: hidden;
+    box-sizing: border-box;
+    padding: 0;
     transform: translateX(-50%);
   }
   `;
-  static properties = {
-  };
 
-  render() {
-    return html`
+  static get properties() {
+    return {
+      senses: { type: Object },
+    };
+  }
+
+  constructor() {
+    super();
+    this.senses = JSON.parse(localStorage.getItem('senses') || '{}');
+  }
+
+  onBlur(id, value) {
+    this.senses = {
+      ...this.senses,
+      [id]: value,
+    };
+    localStorage.setItem('senses', JSON.stringify(this.senses));
+  }
+
+render() {
+  return html`
     <div class="border"> 
       <div class="wrapper">
         <div class="title">
         PASSIIVINEN TARKKAAVAISUUS
         </div>
-        <div class="num">
-          12
-        </div>
+        <textarea id="passiivinenTarkkaavaisuus" class="num" rows="1" @blur="${(e) => this.onBlur(e.target.id, e.target.value)}" .value="${this.senses.passiivinenTarkkaavaisuus || ''}"></textarea>
       </div>
       <div class="wrapper">
         <div class="title">
         ALOITE
         </div>
-        <div class="num">
-          +4
-        </div>
+        <textarea id="aloite" class="num" rows="1" @blur="${(e) => this.onBlur(e.target.id, e.target.value)}" .value="${this.senses.aloite || ''}"></textarea>
       </div>
       <div class="wrapper">
         <div class="title">
         PIMEÄNÄKÖ
         </div>
-        <div class="num">
-          40m
-        </div>
+        <textarea id="pimeänäkö" class="num" rows="1" @blur="${(e) => this.onBlur(e.target.id, e.target.value)}" .value="${this.senses.pimeänäkö || ''}"></textarea>
       </div>
       AISTIT
     </div>
 
     `;
-  }
+}
 }
 customElements.define('senses-element', senses);
