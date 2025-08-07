@@ -1,7 +1,7 @@
 import { LitElement, html, css } from 'lit';
 
 export class Casting extends LitElement {
-    static styles = css`
+  static styles = css`
     .statsRow {
       display: flex;
       flex-direction: row;
@@ -82,52 +82,241 @@ export class Casting extends LitElement {
       align-items: center;
       margin: 5px;
     }
+    .addSpellRow{
+        display: flex;
+        flex-direction: row;
+        margin: 5px;
+    }
+    .selectedSpellsWrapper{
+      border-bottom: solid 1px lightgray;
+    }
+    .spellsDropDown{
+        font-family: "Roboto Condensed", sans-serif;
+        font-size: 15px;
+        border: none;
+        border-radius: 10px;
+        padding: 10px;
+    }
+    .dropdownOption{
+        color: black;
+    }
+    .addBtn{
+        border: none;
+        border-radius: 20px;
+        padding: 0;
+        margin: 0;
+        font-size: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 25px;
+        height: 25px;
+        vertical-align: middle;
+        padding-bottom: 4px;
+        padding-left: 1px;
+        margin: 5px;
+    }
+    .spellRow{
+      display: flex;
+      align-items: center;
+      padding: 10px;
+    }
+    .spellTitle{
+      width: 150px;
+    }
+    .spellRow.even {
+      background-color: lightgray;
+    }
+    .spellRow.odd {
+      background-color: white;
+    }
+    .toggleprepared {
+      width: 12px;
+      height: 12px;
+      border: 1px dotted black;
+      border-radius: 15px;
+      margin-left: 15px;
+      margin-right: 15px;
+      cursor: pointer;
+    }
+    .toggleprepared:hover {
+      background-color: gray;
+    }
+    .toggleprepared.toggled {
+      background-color: black;
+    }
+    .options{
+      display: flex;
+      flex-direction: row;
+      margin-left: auto;
+    }
+    .img{
+        height: 20px;
+        width: 20px;
+        display: flex;
+        padding-left: 10px;
+    }
+    .subTitle{
+      display: flex;
+      flex-direction: row;
+      padding: 5px;
+      padding-left: 55px;
+    }
+    .boldText{
+      font-weight: bold;
+      padding-right: 5px;
+    }
+    .spellDesc{
+      padding-left: 55px;
+      padding-bottom: 5px;
+    }
   `;
 
-    static get properties() {
-        return {
-            castingStats: { type: Object },
-            spellSlots: { type: Object },
-        };
+  static get properties() {
+    return {
+      castingStats: { type: Object },
+      spellSlots: { type: Object },
+      spells: { type: Object },
+      addedCantrips: { type: Array },
+      addedlvl1Spells: { type: Array },
+      addedlvl2Spells: { type: Array },
+      addedlvl3Spells: { type: Array },
+      addedlvl4Spells: { type: Array },
+      addedlvl5Spells: { type: Array },
+      addedlvl6Spells: { type: Array },
+      addedlvl7Spells: { type: Array },
+      addedlvl8Spells: { type: Array },
+      addedlvl9Spells: { type: Array },
+      openSpellDetails: { state: true },
+    };
+  }
+
+  constructor() {
+    super();
+    this.spells = [];
+    this.castingStats = JSON.parse(localStorage.getItem('castingStats') || '{}');
+    this.addedCantrips = JSON.parse(localStorage.getItem('addedCantrips') || '[]');
+    this.addedlvl1Spells = JSON.parse(localStorage.getItem('addedlvl1Spells') || '[]');
+    this.addedlvl2Spells = JSON.parse(localStorage.getItem('addedlvl2Spells') || '[]');
+    this.addedlvl3Spells = JSON.parse(localStorage.getItem('addedlvl3Spells') || '[]');
+    this.addedlvl4Spells = JSON.parse(localStorage.getItem('addedlvl4Spells') || '[]');
+    this.addedlvl5Spells = JSON.parse(localStorage.getItem('addedlvl5Spells') || '[]');
+    this.addedlvl6Spells = JSON.parse(localStorage.getItem('addedlvl6Spells') || '[]');
+    this.addedlvl7Spells = JSON.parse(localStorage.getItem('addedlvl7Spells') || '[]');
+    this.addedlvl8Spells = JSON.parse(localStorage.getItem('addedlvl8Spells') || '[]');
+    this.addedlvl9Spells = JSON.parse(localStorage.getItem('addedlvl9Spells') || '[]');
+    this.openSpellDetails = new Set();
+    const savedSlots = JSON.parse(localStorage.getItem('spellSlots') || '{}');
+    this.spellSlots =
+      savedSlots && Object.keys(savedSlots).length === 9
+        ? savedSlots
+        : { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0 };
+  }
+
+  async connectedCallback() {
+    super.connectedCallback();
+    await this.loadCSV();
+  }
+
+  async loadCSV() {
+    const response = await fetch("data/spells.csv");
+    const csvText = await response.text();
+    const result = Papa.parse(csvText, {
+      header: true,
+      skipEmptyLines: true
+    });
+    this.spells = result.data;
+    this.spells.sort((a, b) => a.nimi.localeCompare(b.nimi, 'fi', { sensitivity: 'base' }));
+    console.log(this.spells);
+  }
+
+  onSpellStatBlur(id, value) {
+    this.castingStats = {
+      ...this.castingStats,
+      [id]: value,
+    };
+    localStorage.setItem('castingStats', JSON.stringify(this.castingStats));
+  }
+
+  incrementSpellSlot(id) {
+    this.spellSlots = {
+      ...this.spellSlots,
+      [id]: (typeof this.spellSlots[id] === 'number' ? this.spellSlots[id] : 1) + 1,
+    };
+    localStorage.setItem('spellSlots', JSON.stringify(this.spellSlots));
+  }
+
+  decrementSpellSlot(id) {
+    this.spellSlots = {
+      ...this.spellSlots,
+      [id]: Math.max(0, (typeof this.spellSlots[id] === 'number' ? this.spellSlots[id] : 1) - 1),
+    };
+    localStorage.setItem('spellSlots', JSON.stringify(this.spellSlots));
+  }
+
+  addSpell() {
+    const dropdown = this.shadowRoot.getElementById('spells');
+    const selectedName = dropdown.value;
+    if (selectedName === 'default') return;
+    const selectedSpell = this.spells.find(s => s.nimi === selectedName);
+
+    if (selectedSpell && selectedSpell.loitsunPiiri == "Taikakonsti") {
+      this.addedCantrips = [...this.addedCantrips, selectedSpell];
+      localStorage.setItem('addedCantrips', JSON.stringify(this.addedCantrips));
     }
-
-    constructor() {
-        super();
-        this.castingStats = JSON.parse(localStorage.getItem('castingStats') || '{}');
-
-        const savedSlots = JSON.parse(localStorage.getItem('spellSlots') || '{}');
-        this.spellSlots =
-            savedSlots && Object.keys(savedSlots).length === 9
-                ? savedSlots
-                : { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0 };
+    if (selectedSpell && selectedSpell.loitsunPiiri == "1-piirin") {
+      this.addedlvl1Spells = [...this.addedlvl1Spells, selectedSpell];
+      localStorage.setItem('addedlvl1Spells', JSON.stringify(this.addedlvl1Spells));
     }
-
-    onSpellStatBlur(id, value) {
-        this.castingStats = {
-            ...this.castingStats,
-            [id]: value,
-        };
-        localStorage.setItem('castingStats', JSON.stringify(this.castingStats));
+    if (selectedSpell && selectedSpell.loitsunPiiri == "2-piirin") {
+      this.addedlvl2Spells = [...this.addedlvl2Spells, selectedSpell];
+      localStorage.setItem('addedlvl2Spells', JSON.stringify(this.addedlvl2Spells));
     }
-
-    incrementSpellSlot(id) {
-        this.spellSlots = {
-            ...this.spellSlots,
-            [id]: (typeof this.spellSlots[id] === 'number' ? this.spellSlots[id] : 1) + 1,
-        };
-        localStorage.setItem('spellSlots', JSON.stringify(this.spellSlots));
+    if (selectedSpell && selectedSpell.loitsunPiiri == "3-piirin") {
+      this.addedlvl3Spells = [...this.addedlvl3Spells, selectedSpell];
+      localStorage.setItem('addedlvl3Spells', JSON.stringify(this.addedlvl3Spells));
     }
-
-    decrementSpellSlot(id) {
-        this.spellSlots = {
-            ...this.spellSlots,
-            [id]: Math.max(0, (typeof this.spellSlots[id] === 'number' ? this.spellSlots[id] : 1) - 1),
-        };
-        localStorage.setItem('spellSlots', JSON.stringify(this.spellSlots));
+    if (selectedSpell && selectedSpell.loitsunPiiri == "4-piirin") {
+      this.addedlvl4Spells = [...this.addedlvl4Spells, selectedSpell];
+      localStorage.setItem('addedlvl4Spells', JSON.stringify(this.addedlvl4Spells));
     }
+    if (selectedSpell && selectedSpell.loitsunPiiri == "5-piirin") {
+      this.addedlvl5Spells = [...this.addedlvl5Spells, selectedSpell];
+      localStorage.setItem('addedlvl5Spells', JSON.stringify(this.addedlvl5Spells));
+    }
+    if (selectedSpell && selectedSpell.loitsunPiiri == "6-piirin") {
+      this.addedlvl6Spells = [...this.addedlvl6Spells, selectedSpell];
+      localStorage.setItem('addedlvl6Spells', JSON.stringify(this.addedlvl6Spells));
+    }
+    if (selectedSpell && selectedSpell.loitsunPiiri == "7-piirin") {
+      this.addedlvl7Spells = [...this.addedlvl7Spells, selectedSpell];
+      localStorage.setItem('addedlvl7Spells', JSON.stringify(this.addedlvl7Spells));
+    }
+    if (selectedSpell && selectedSpell.loitsunPiiri == "8-piirin") {
+      this.addedlvl8Spells = [...this.addedlvl8Spells, selectedSpell];
+      localStorage.setItem('addedlvl8Spells', JSON.stringify(this.addedlvl8Spells));
+    }
+    if (selectedSpell && selectedSpell.loitsunPiiri == "9-piirin") {
+      this.addedlvl9Spells = [...this.addedlvl9Spells, selectedSpell];
+      localStorage.setItem('addedlvl9Spells', JSON.stringify(this.addedlvl9Spells));
+    }
+  }
+  toggleSpellDetail(spellName) {
+    const updated = new Set(this.openSpellDetails);
+    if (updated.has(spellName)) {
+      updated.delete(spellName);
+    } else {
+      updated.add(spellName);
+    }
+    this.openSpellDetails = updated;
+  }
 
-    render() {
-        return html`
+  deleteSpell(){
+    
+  }
+
+  render() {
+    return html`
       <div class="wrapper">
         <div class="statsRow">
           <div class="stats">
@@ -164,228 +353,492 @@ export class Casting extends LitElement {
         </div>
 
         <div class="spellSlotRow">
-          <div class="slotWrapper">
-            <section class="slotTitle">1</section>
-            <div class="slot" id="1">
-              <span class="slotCounter">${this.spellSlots[1]}</span>
-              <span class="buttonWrapper">
-                <button
-                  class="slotButton"
-                  @click="${() => this.incrementSpellSlot(1)}"
-                >
-                  +
-                </button>
-                <button
-                  class="slotButton"
-                  @click="${() => this.decrementSpellSlot(1)}"
-                >
-                  -
-                </button>
-              </span>
+          ${[1, 2, 3, 4, 5, 6, 7, 8, 9].map(i => html`
+            <div class="slotWrapper">
+              <section class="slotTitle">${i}</section>
+              <div class="slot" id="${i}">
+                <span class="slotCounter">${this.spellSlots[i]}</span>
+                <span class="buttonWrapper">
+                  <button class="slotButton" @click="${() => this.incrementSpellSlot(i)}">+</button>
+                  <button class="slotButton" @click="${() => this.decrementSpellSlot(i)}">-</button>
+                </span>
+              </div>
             </div>
-          </div>
+          `)}
+        </div>
 
-          <div class="slotWrapper">
-            <section class="slotTitle">2</section>
-            <div class="slot" id="2">
-              <span class="slotCounter">${this.spellSlots[2]}</span>
-              <span class="buttonWrapper">
-                <button
-                  class="slotButton"
-                  @click="${() => this.incrementSpellSlot(2)}"
-                >
-                  +
-                </button>
-                <button
-                  class="slotButton"
-                  @click="${() => this.decrementSpellSlot(2)}"
-                >
-                  -
-                </button>
-              </span>
-            </div>
-          </div>
+        <div class="selectedSpellsWrapper">
+          <div class="title">TAIKAKONSTIT</div>
+            ${this.addedCantrips.map((spell, i) => html`
+              <div class="spellRow ${i % 2 === 0 ? 'even' : 'odd'}">
+                <div
+                  class="toggleprepared ${this.toggleprepared ? 'toggled' : ''}"
+                  title="Toggle prepared"
+                ></div>
+                <span class="spellTitle">${spell.nimi}</span>
+                <div class="options">
+                  <img
+                    src="../icons/down-arrow.png"
+                    class="img"
+                    @click="${() => this.toggleSpellDetail(spell.nimi)}"
+                    title="Show Details"
+                  >
+                  <img src="../icons/trash.png" class="img" title="Delete">
+                </div>
+              </div>
 
-          <div class="slotWrapper">
-            <section class="slotTitle">3</section>
-            <div class="slot" id="3">
-              <span class="slotCounter">${this.spellSlots[3]}</span>
-              <span class="buttonWrapper">
-                <button
-                  class="slotButton"
-                  @click="${() => this.incrementSpellSlot(3)}"
-                >
-                  +
-                </button>
-                <button
-                  class="slotButton"
-                  @click="${() => this.decrementSpellSlot(3)}"
-                >
-                  -
-                </button>
-              </span>
-            </div>
-          </div>
+              ${this.openSpellDetails.has(spell.nimi)
+                ? html`
+                <div class="spellDetails">
+                  <div class="subTitle">
+                    <span class="boldText">Loitsun koulukunta:</span>${spell.loitsunKoulukunta}
+                  </div>
+                  <div class="subTitle">
+                    <span class="boldText">Loitsun lotisimisviive:</span>${spell.loitsimisviive}
+                  </div>
+                  <div class="subTitle">
+                    <span class="boldText">Kantama:</span>${spell.kantama}
+                  </div>
+                  <div class="subTitle">
+                    <span class="boldText">Komponentit:</span>${spell.komponentit}
+                  </div>
+                  <div class="subTitle">
+                    <span class="boldText">Kesto:</span>${spell.kesto}
+                  </div>
+                  <div class="spellDesc">
+                    ${spell.kuvaus}
+                  </div>
+                </div>`
+                : ''}
+            `)}
+        </div>
+        
+        <div class="selectedSpellsWrapper">
+          <div class="title">1. PIIRIN LOITSUT</div>
+            ${this.addedlvl1Spells.map((spell, i) => html`
+              <div class="spellRow ${i % 2 === 0 ? 'even' : 'odd'}">
+                <div
+                  class="toggleprepared ${this.toggleprepared ? 'toggled' : ''}"
+                  title="Toggle prepared"
+                ></div>
+                <span class="spellTitle">${spell.nimi}</span>
+                <div class="options">
+                  <img
+                    src="../icons/down-arrow.png"
+                    class="img"
+                    @click="${() => this.toggleSpellDetail(spell.nimi)}"
+                    title="Show Details"
+                  >
+                  <img src="../icons/trash.png" class="img" title="Delete">
+                </div>
+              </div>
 
-          <div class="slotWrapper">
-            <section class="slotTitle">4</section>
-            <div class="slot" id="4">
-              <span class="slotCounter">${this.spellSlots[4]}</span>
-              <span class="buttonWrapper">
-                <button
-                  class="slotButton"
-                  @click="${() => this.incrementSpellSlot(4)}"
-                >
-                  +
-                </button>
-                <button
-                  class="slotButton"
-                  @click="${() => this.decrementSpellSlot(4)}"
-                >
-                  -
-                </button>
-              </span>
-            </div>
-          </div>
+              ${this.openSpellDetails.has(spell.nimi)
+                ? html`
+                <div class="spellDetails">
+                  <div class="subTitle">
+                    <span class="boldText">Loitsun koulukunta:</span>${spell.loitsunKoulukunta}
+                  </div>
+                  <div class="subTitle">
+                    <span class="boldText">Loitsun lotisimisviive:</span>${spell.loitsimisviive}
+                  </div>
+                  <div class="subTitle">
+                    <span class="boldText">Kantama:</span>${spell.kantama}
+                  </div>
+                  <div class="subTitle">
+                    <span class="boldText">Komponentit:</span>${spell.komponentit}
+                  </div>
+                  <div class="subTitle">
+                    <span class="boldText">Kesto:</span>${spell.kesto}
+                  </div>
+                  <div class="spellDesc">
+                    ${spell.kuvaus}
+                  </div>
+                </div>`
+                : ''}
+            `)}
+        </div>
 
-          <div class="slotWrapper">
-            <section class="slotTitle">5</section>
-            <div class="slot" id="5">
-              <span class="slotCounter">${this.spellSlots[5]}</span>
-              <span class="buttonWrapper">
-                <button
-                  class="slotButton"
-                  @click="${() => this.incrementSpellSlot(5)}"
-                >
-                  +
-                </button>
-                <button
-                  class="slotButton"
-                  @click="${() => this.decrementSpellSlot(5)}"
-                >
-                  -
-                </button>
-              </span>
-            </div>
-          </div>
+        <div class="selectedSpellsWrapper">
+          <div class="title">2. PIIRIN LOITSUT</div>
+            ${this.addedlvl2Spells.map((spell, i) => html`
+              <div class="spellRow ${i % 2 === 0 ? 'even' : 'odd'}">
+                <div
+                  class="toggleprepared ${this.toggleprepared ? 'toggled' : ''}"
+                  title="Toggle prepared"
+                ></div>
+                <span class="spellTitle">${spell.nimi}</span>
+                <div class="options">
+                  <img
+                    src="../icons/down-arrow.png"
+                    class="img"
+                    @click="${() => this.toggleSpellDetail(spell.nimi)}"
+                    title="Show Details"
+                  >
+                  <img src="../icons/trash.png" class="img" title="Delete">
+                </div>
+              </div>
 
-          <div class="slotWrapper">
-            <section class="slotTitle">6</section>
-            <div class="slot" id="6">
-              <span class="slotCounter">${this.spellSlots[6]}</span>
-              <span class="buttonWrapper">
-                <button
-                  class="slotButton"
-                  @click="${() => this.incrementSpellSlot(6)}"
-                >
-                  +
-                </button>
-                <button
-                  class="slotButton"
-                  @click="${() => this.decrementSpellSlot(6)}"
-                >
-                  -
-                </button>
-              </span>
-            </div>
-          </div>
+              ${this.openSpellDetails.has(spell.nimi)
+                ? html`
+                <div class="spellDetails">
+                  <div class="subTitle">
+                    <span class="boldText">Loitsun koulukunta:</span>${spell.loitsunKoulukunta}
+                  </div>
+                  <div class="subTitle">
+                    <span class="boldText">Loitsun lotisimisviive:</span>${spell.loitsimisviive}
+                  </div>
+                  <div class="subTitle">
+                    <span class="boldText">Kantama:</span>${spell.kantama}
+                  </div>
+                  <div class="subTitle">
+                    <span class="boldText">Komponentit:</span>${spell.komponentit}
+                  </div>
+                  <div class="subTitle">
+                    <span class="boldText">Kesto:</span>${spell.kesto}
+                  </div>
+                  <div class="spellDesc">
+                    ${spell.kuvaus}
+                  </div>
+                </div>`
+                : ''}
+            `)}
+        </div>
 
-          <div class="slotWrapper">
-            <section class="slotTitle">7</section>
-            <div class="slot" id="7">
-              <span class="slotCounter">${this.spellSlots[7]}</span>
-              <span class="buttonWrapper">
-                <button
-                  class="slotButton"
-                  @click="${() => this.incrementSpellSlot(7)}"
-                >
-                  +
-                </button>
-                <button
-                  class="slotButton"
-                  @click="${() => this.decrementSpellSlot(7)}"
-                >
-                  -
-                </button>
-              </span>
-            </div>
-          </div>
+        <div class="selectedSpellsWrapper">
+          <div class="title">3. PIIRIN LOITSUT</div>
+            ${this.addedlvl3Spells.map((spell, i) => html`
+              <div class="spellRow ${i % 2 === 0 ? 'even' : 'odd'}">
+                <div
+                  class="toggleprepared ${this.toggleprepared ? 'toggled' : ''}"
+                  title="Toggle prepared"
+                ></div>
+                <span class="spellTitle">${spell.nimi}</span>
+                <div class="options">
+                  <img
+                    src="../icons/down-arrow.png"
+                    class="img"
+                    @click="${() => this.toggleSpellDetail(spell.nimi)}"
+                    title="Show Details"
+                  >
+                  <img src="../icons/trash.png" class="img" title="Delete">
+                </div>
+              </div>
 
-          <div class="slotWrapper">
-            <section class="slotTitle">8</section>
-            <div class="slot" id="8">
-              <span class="slotCounter">${this.spellSlots[8]}</span>
-              <span class="buttonWrapper">
-                <button
-                  class="slotButton"
-                  @click="${() => this.incrementSpellSlot(8)}"
-                >
-                  +
-                </button>
-                <button
-                  class="slotButton"
-                  @click="${() => this.decrementSpellSlot(8)}"
-                >
-                  -
-                </button>
-              </span>
-            </div>
-          </div>
+              ${this.openSpellDetails.has(spell.nimi)
+                ? html`
+                <div class="spellDetails">
+                  <div class="subTitle">
+                    <span class="boldText">Loitsun koulukunta:</span>${spell.loitsunKoulukunta}
+                  </div>
+                  <div class="subTitle">
+                    <span class="boldText">Loitsun lotisimisviive:</span>${spell.loitsimisviive}
+                  </div>
+                  <div class="subTitle">
+                    <span class="boldText">Kantama:</span>${spell.kantama}
+                  </div>
+                  <div class="subTitle">
+                    <span class="boldText">Komponentit:</span>${spell.komponentit}
+                  </div>
+                  <div class="subTitle">
+                    <span class="boldText">Kesto:</span>${spell.kesto}
+                  </div>
+                  <div class="spellDesc">
+                    ${spell.kuvaus}
+                  </div>
+                </div>`
+                : ''}
+            `)}
+        </div>
 
-          <div class="slotWrapper">
-            <section class="slotTitle">9</section>
-            <div class="slot" id="9">
-              <span class="slotCounter">${this.spellSlots[9]}</span>
-              <span class="buttonWrapper">
-                <button
-                  class="slotButton"
-                  @click="${() => this.incrementSpellSlot(9)}"
-                >
-                  +
-                </button>
-                <button
-                  class="slotButton"
-                  @click="${() => this.decrementSpellSlot(9)}"
-                >
-                  -
-                </button>
-              </span>
-            </div>
-          </div>
-        </div>
         <div class="selectedSpellsWrapper">
-            <div class="title">TAIKAKONSTIT</div>
+          <div class="title">4. PIIRIN LOITSUT</div>
+            ${this.addedlvl4Spells.map((spell, i) => html`
+              <div class="spellRow ${i % 2 === 0 ? 'even' : 'odd'}">
+                <div
+                  class="toggleprepared ${this.toggleprepared ? 'toggled' : ''}"
+                  title="Toggle prepared"
+                ></div>
+                <span class="spellTitle">${spell.nimi}</span>
+                <div class="options">
+                  <img
+                    src="../icons/down-arrow.png"
+                    class="img"
+                    @click="${() => this.toggleSpellDetail(spell.nimi)}"
+                    title="Show Details"
+                  >
+                  <img src="../icons/trash.png" class="img" title="Delete">
+                </div>
+              </div>
+
+              ${this.openSpellDetails.has(spell.nimi)
+                ? html`
+                <div class="spellDetails">
+                  <div class="subTitle">
+                    <span class="boldText">Loitsun koulukunta:</span>${spell.loitsunKoulukunta}
+                  </div>
+                  <div class="subTitle">
+                    <span class="boldText">Loitsun lotisimisviive:</span>${spell.loitsimisviive}
+                  </div>
+                  <div class="subTitle">
+                    <span class="boldText">Kantama:</span>${spell.kantama}
+                  </div>
+                  <div class="subTitle">
+                    <span class="boldText">Komponentit:</span>${spell.komponentit}
+                  </div>
+                  <div class="subTitle">
+                    <span class="boldText">Kesto:</span>${spell.kesto}
+                  </div>
+                  <div class="spellDesc">
+                    ${spell.kuvaus}
+                  </div>
+                </div>`
+                : ''}
+            `)}
         </div>
+
         <div class="selectedSpellsWrapper">
-            <div class="title">1. PIIRIN LOITSUT</div>
+          <div class="title">5. PIIRIN LOITSUT</div>
+            ${this.addedlvl5Spells.map((spell, i) => html`
+              <div class="spellRow ${i % 2 === 0 ? 'even' : 'odd'}">
+                <div
+                  class="toggleprepared ${this.toggleprepared ? 'toggled' : ''}"
+                  title="Toggle prepared"
+                ></div>
+                <span class="spellTitle">${spell.nimi}</span>
+                <div class="options">
+                  <img
+                    src="../icons/down-arrow.png"
+                    class="img"
+                    @click="${() => this.toggleSpellDetail(spell.nimi)}"
+                    title="Show Details"
+                  >
+                  <img src="../icons/trash.png" class="img" title="Delete">
+                </div>
+              </div>
+
+              ${this.openSpellDetails.has(spell.nimi)
+                ? html`
+                <div class="spellDetails">
+                  <div class="subTitle">
+                    <span class="boldText">Loitsun koulukunta:</span>${spell.loitsunKoulukunta}
+                  </div>
+                  <div class="subTitle">
+                    <span class="boldText">Loitsun lotisimisviive:</span>${spell.loitsimisviive}
+                  </div>
+                  <div class="subTitle">
+                    <span class="boldText">Kantama:</span>${spell.kantama}
+                  </div>
+                  <div class="subTitle">
+                    <span class="boldText">Komponentit:</span>${spell.komponentit}
+                  </div>
+                  <div class="subTitle">
+                    <span class="boldText">Kesto:</span>${spell.kesto}
+                  </div>
+                  <div class="spellDesc">
+                    ${spell.kuvaus}
+                  </div>
+                </div>`
+                : ''}
+            `)}
         </div>
+
         <div class="selectedSpellsWrapper">
-            <div class="title">2. PIIRIN LOITSUT</div>
+          <div class="title">6. PIIRIN LOITSUT</div>
+            ${this.addedlvl6Spells.map((spell, i) => html`
+              <div class="spellRow ${i % 2 === 0 ? 'even' : 'odd'}">
+                <div
+                  class="toggleprepared ${this.toggleprepared ? 'toggled' : ''}"
+                  title="Toggle prepared"
+                ></div>
+                <span class="spellTitle">${spell.nimi}</span>
+                <div class="options">
+                  <img
+                    src="../icons/down-arrow.png"
+                    class="img"
+                    @click="${() => this.toggleSpellDetail(spell.nimi)}"
+                    title="Show Details"
+                  >
+                  <img src="../icons/trash.png" class="img" title="Delete">
+                </div>
+              </div>
+
+              ${this.openSpellDetails.has(spell.nimi)
+                ? html`
+                <div class="spellDetails">
+                  <div class="subTitle">
+                    <span class="boldText">Loitsun koulukunta:</span>${spell.loitsunKoulukunta}
+                  </div>
+                  <div class="subTitle">
+                    <span class="boldText">Loitsun lotisimisviive:</span>${spell.loitsimisviive}
+                  </div>
+                  <div class="subTitle">
+                    <span class="boldText">Kantama:</span>${spell.kantama}
+                  </div>
+                  <div class="subTitle">
+                    <span class="boldText">Komponentit:</span>${spell.komponentit}
+                  </div>
+                  <div class="subTitle">
+                    <span class="boldText">Kesto:</span>${spell.kesto}
+                  </div>
+                  <div class="spellDesc">
+                    ${spell.kuvaus}
+                  </div>
+                </div>`
+                : ''}
+            `)}
         </div>
+
         <div class="selectedSpellsWrapper">
-            <div class="title">3. PIIRIN LOITSUT</div>
+          <div class="title">7. PIIRIN LOITSUT</div>
+            ${this.addedlvl7Spells.map((spell, i) => html`
+              <div class="spellRow ${i % 2 === 0 ? 'even' : 'odd'}">
+                <div
+                  class="toggleprepared ${this.toggleprepared ? 'toggled' : ''}"
+                  title="Toggle prepared"
+                ></div>
+                <span class="spellTitle">${spell.nimi}</span>
+                <div class="options">
+                  <img
+                    src="../icons/down-arrow.png"
+                    class="img"
+                    @click="${() => this.toggleSpellDetail(spell.nimi)}"
+                    title="Show Details"
+                  >
+                  <img src="../icons/trash.png" class="img" title="Delete">
+                </div>
+              </div>
+
+              ${this.openSpellDetails.has(spell.nimi)
+                ? html`
+                <div class="spellDetails">
+                  <div class="subTitle">
+                    <span class="boldText">Loitsun koulukunta:</span>${spell.loitsunKoulukunta}
+                  </div>
+                  <div class="subTitle">
+                    <span class="boldText">Loitsun lotisimisviive:</span>${spell.loitsimisviive}
+                  </div>
+                  <div class="subTitle">
+                    <span class="boldText">Kantama:</span>${spell.kantama}
+                  </div>
+                  <div class="subTitle">
+                    <span class="boldText">Komponentit:</span>${spell.komponentit}
+                  </div>
+                  <div class="subTitle">
+                    <span class="boldText">Kesto:</span>${spell.kesto}
+                  </div>
+                  <div class="spellDesc">
+                    ${spell.kuvaus}
+                  </div>
+                </div>`
+                : ''}
+            `)}
         </div>
+
         <div class="selectedSpellsWrapper">
-            <div class="title">4. PIIRIN LOITSUT</div>
+          <div class="title">8. PIIRIN LOITSUT</div>
+            ${this.addedlvl8Spells.map((spell, i) => html`
+              <div class="spellRow ${i % 2 === 0 ? 'even' : 'odd'}">
+                <div
+                  class="toggleprepared ${this.toggleprepared ? 'toggled' : ''}"
+                  title="Toggle prepared"
+                ></div>
+                <span class="spellTitle">${spell.nimi}</span>
+                <div class="options">
+                  <img
+                    src="../icons/down-arrow.png"
+                    class="img"
+                    @click="${() => this.toggleSpellDetail(spell.nimi)}"
+                    title="Show Details"
+                  >
+                  <img src="../icons/trash.png" class="img" title="Delete">
+                </div>
+              </div>
+
+              ${this.openSpellDetails.has(spell.nimi)
+                ? html`
+                <div class="spellDetails">
+                  <div class="subTitle">
+                    <span class="boldText">Loitsun koulukunta:</span>${spell.loitsunKoulukunta}
+                  </div>
+                  <div class="subTitle">
+                    <span class="boldText">Loitsun lotisimisviive:</span>${spell.loitsimisviive}
+                  </div>
+                  <div class="subTitle">
+                    <span class="boldText">Kantama:</span>${spell.kantama}
+                  </div>
+                  <div class="subTitle">
+                    <span class="boldText">Komponentit:</span>${spell.komponentit}
+                  </div>
+                  <div class="subTitle">
+                    <span class="boldText">Kesto:</span>${spell.kesto}
+                  </div>
+                  <div class="spellDesc">
+                    ${spell.kuvaus}
+                  </div>
+                </div>`
+                : ''}
+            `)}
         </div>
+
         <div class="selectedSpellsWrapper">
-            <div class="title">5. PIIRIN LOITSUT</div>
+          <div class="title">9. PIIRIN LOITSUT</div>
+            ${this.addedlvl9Spells.map((spell, i) => html`
+              <div class="spellRow ${i % 2 === 0 ? 'even' : 'odd'}">
+                <div
+                  class="toggleprepared ${this.toggleprepared ? 'toggled' : ''}"
+                  title="Toggle prepared"
+                ></div>
+                <span class="spellTitle">${spell.nimi}</span>
+                <div class="options">
+                  <img
+                    src="../icons/down-arrow.png"
+                    class="img"
+                    @click="${() => this.toggleSpellDetail(spell.nimi)}"
+                    title="Show Details"
+                  >
+                  <img src="../icons/trash.png" class="img" title="Delete">
+                </div>
+              </div>
+
+              ${this.openSpellDetails.has(spell.nimi)
+                ? html`
+                <div class="spellDetails">
+                  <div class="subTitle">
+                    <span class="boldText">Loitsun koulukunta:</span>${spell.loitsunKoulukunta}
+                  </div>
+                  <div class="subTitle">
+                    <span class="boldText">Loitsun lotisimisviive:</span>${spell.loitsimisviive}
+                  </div>
+                  <div class="subTitle">
+                    <span class="boldText">Kantama:</span>${spell.kantama}
+                  </div>
+                  <div class="subTitle">
+                    <span class="boldText">Komponentit:</span>${spell.komponentit}
+                  </div>
+                  <div class="subTitle">
+                    <span class="boldText">Kesto:</span>${spell.kesto}
+                  </div>
+                  <div class="spellDesc">
+                    ${spell.kuvaus}
+                  </div>
+                </div>`
+                : ''}
+            `)}
         </div>
-        <div class="selectedSpellsWrapper">
-            <div class="title">6. PIIRIN LOITSUT</div>
-        </div>
-        <div class="selectedSpellsWrapper">
-            <div class="title">7. PIIRIN LOITSUT</div>
-        </div>
-        <div class="selectedSpellsWrapper">
-            <div class="title">8. PIIRIN LOITSUT</div>
-        </div>
-        <div class="selectedSpellsWrapper">
-            <div class="title">9. PIIRIN LOITSUT</div>
+
+        <div class="addSpellRow">
+          <select class="spellsDropDown" id="spells">
+            <option value="default" disabled selected>Lisää taika</option>
+            ${this.spells.map(
+      spell => html`<option class="dropdownOption" value="${spell.nimi}">${spell.nimi}</option>`
+    )}
+          </select>
+          <button type="button" class="addBtn" @click="${this.addSpell}">+</button>
         </div>
       </div>
     `;
-    }
+  }
 }
 
 customElements.define('casting-element', Casting);

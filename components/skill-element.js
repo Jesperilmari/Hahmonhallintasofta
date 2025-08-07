@@ -65,7 +65,7 @@ class Skill extends LitElement {
     name: { type: String },
     attr: { type: String },
     bonus: { type: Number, state: true },
-    highlightProficiency: { type: Boolean, state: true },
+    highlightProficiency: { type: Boolean },
     toggleProficiency: { type: Boolean },
     proficiencyBonus: { type: Number },
     baseModifier: { type: Number, state: true }
@@ -160,8 +160,8 @@ class Skill extends LitElement {
             class="toggleproficiency ${this.highlightProficiency ? 'highlighted' : ''} ${this.toggleProficiency ? 'toggled' : ''}"
             @mouseenter="${this.mouseEnterProficiencyBtn}"
             @mouseleave="${this.mouseLeaveProficiencyBtn}"
+            title="Toggle prepared"
             @click="${this.clickProficiencyBtn}"
-            title="Toggle proficiency"
           ></div>
           <p class="attr">${this.attr}</p>
         </span>
