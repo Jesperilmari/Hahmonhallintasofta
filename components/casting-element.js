@@ -311,8 +311,31 @@ export class Casting extends LitElement {
     this.openSpellDetails = updated;
   }
 
-  deleteSpell(){
-    
+  deleteSpell(spellName) {
+    const spellLists = [
+      { arr: 'addedCantrips', key: 'addedCantrips' },
+      { arr: 'addedlvl1Spells', key: 'addedlvl1Spells' },
+      { arr: 'addedlvl2Spells', key: 'addedlvl2Spells' },
+      { arr: 'addedlvl3Spells', key: 'addedlvl3Spells' },
+      { arr: 'addedlvl4Spells', key: 'addedlvl4Spells' },
+      { arr: 'addedlvl5Spells', key: 'addedlvl5Spells' },
+      { arr: 'addedlvl6Spells', key: 'addedlvl6Spells' },
+      { arr: 'addedlvl7Spells', key: 'addedlvl7Spells' },
+      { arr: 'addedlvl8Spells', key: 'addedlvl8Spells' },
+      { arr: 'addedlvl9Spells', key: 'addedlvl9Spells' }
+    ];
+
+    for (let { arr, key } of spellLists) {
+        if (this[arr].some(spell => spell.nimi === spellName)) {
+          this[arr] = this[arr].filter(spell => spell.nimi !== spellName);
+          localStorage.setItem(key, JSON.stringify(this[arr]));
+
+          if (this.selectedSpellName === spellName) {
+            this.selectedSpellName = null;
+          }
+          break;
+        }
+      }
   }
 
   render() {
@@ -383,7 +406,7 @@ export class Casting extends LitElement {
                     @click="${() => this.toggleSpellDetail(spell.nimi)}"
                     title="Show Details"
                   >
-                  <img src="../icons/trash.png" class="img" title="Delete">
+                  <img src="../icons/trash.png" class="img" title="Delete" @click="${() => this.deleteSpell(spell.nimi)}">
                 </div>
               </div>
 
@@ -429,7 +452,7 @@ export class Casting extends LitElement {
                     @click="${() => this.toggleSpellDetail(spell.nimi)}"
                     title="Show Details"
                   >
-                  <img src="../icons/trash.png" class="img" title="Delete">
+                  <img src="../icons/trash.png" class="img" title="Delete" @click="${() => this.deleteSpell(spell.nimi)}">
                 </div>
               </div>
 
@@ -475,7 +498,7 @@ export class Casting extends LitElement {
                     @click="${() => this.toggleSpellDetail(spell.nimi)}"
                     title="Show Details"
                   >
-                  <img src="../icons/trash.png" class="img" title="Delete">
+                  <img src="../icons/trash.png" class="img" title="Delete" @click="${() => this.deleteSpell(spell.nimi)}">
                 </div>
               </div>
 
@@ -521,7 +544,7 @@ export class Casting extends LitElement {
                     @click="${() => this.toggleSpellDetail(spell.nimi)}"
                     title="Show Details"
                   >
-                  <img src="../icons/trash.png" class="img" title="Delete">
+                  <img src="../icons/trash.png" class="img" title="Delete" @click="${() => this.deleteSpell(spell.nimi)}">
                 </div>
               </div>
 
@@ -567,7 +590,7 @@ export class Casting extends LitElement {
                     @click="${() => this.toggleSpellDetail(spell.nimi)}"
                     title="Show Details"
                   >
-                  <img src="../icons/trash.png" class="img" title="Delete">
+                  <img src="../icons/trash.png" class="img" title="Delete" @click="${() => this.deleteSpell(spell.nimi)}">
                 </div>
               </div>
 
@@ -613,7 +636,7 @@ export class Casting extends LitElement {
                     @click="${() => this.toggleSpellDetail(spell.nimi)}"
                     title="Show Details"
                   >
-                  <img src="../icons/trash.png" class="img" title="Delete">
+                  <img src="../icons/trash.png" class="img" title="Delete" @click="${() => this.deleteSpell(spell.nimi)}">
                 </div>
               </div>
 
@@ -659,7 +682,7 @@ export class Casting extends LitElement {
                     @click="${() => this.toggleSpellDetail(spell.nimi)}"
                     title="Show Details"
                   >
-                  <img src="../icons/trash.png" class="img" title="Delete">
+                  <img src="../icons/trash.png" class="img" title="Delete" @click="${() => this.deleteSpell(spell.nimi)}">
                 </div>
               </div>
 
@@ -705,7 +728,7 @@ export class Casting extends LitElement {
                     @click="${() => this.toggleSpellDetail(spell.nimi)}"
                     title="Show Details"
                   >
-                  <img src="../icons/trash.png" class="img" title="Delete">
+                  <img src="../icons/trash.png" class="img" title="Delete" @click="${() => this.deleteSpell(spell.nimi)}">
                 </div>
               </div>
 
@@ -751,7 +774,7 @@ export class Casting extends LitElement {
                     @click="${() => this.toggleSpellDetail(spell.nimi)}"
                     title="Show Details"
                   >
-                  <img src="../icons/trash.png" class="img" title="Delete">
+                  <img src="../icons/trash.png" class="img" title="Delete" @click="${() => this.deleteSpell(spell.nimi)}">
                 </div>
               </div>
 
@@ -797,7 +820,7 @@ export class Casting extends LitElement {
                     @click="${() => this.toggleSpellDetail(spell.nimi)}"
                     title="Show Details"
                   >
-                  <img src="../icons/trash.png" class="img" title="Delete">
+                  <img src="../icons/trash.png" class="img" title="Delete" @click="${() => this.deleteSpell(spell.nimi)}">
                 </div>
               </div>
 
