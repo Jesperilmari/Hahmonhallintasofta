@@ -175,21 +175,32 @@ export class CharacterClass extends LitElement {
             max-width: 500px;
             min-width: 100px;
         }
+        .secondaryTitle{
+            margin-left: 10px;
+            margin-right: 10px;
+            margin-bottom: 5px;
+        }
     `
 
     constructor() {
         super();
         this.showAddTrait = false;
-        this.traits = JSON.parse(localStorage.getItem('traits') || '[]');
+        this.classTraits = JSON.parse(localStorage.getItem('classTraits') || '[]');
+        this.perks = JSON.parse(localStorage.getItem('perks') || '[]');
+        this.experience = JSON.parse(localStorage.getItem('experience') || '[]');
+        this.class = JSON.parse(localStorage.getItem('class') || '[]');
         this.showAddTrait = false;
         this.showAddPerk = false;
     }
 
     static get properties(){
         return{
-            traits: { type: Array },
+            classTraits: { type: Array },
+            perks: { type: Array},
             showAddTrait: { type: Boolean },
             showAddPerk: { type: Boolean},
+            experience: { type: Object},
+            class: { type: Object}
         }
     }
 
@@ -234,6 +245,52 @@ export class CharacterClass extends LitElement {
         }
     }
 
+    addTrait(){
+        const name = this.renderRoot.querySelector('#traitName')?.value ?? '';
+        const desc = this.renderRoot.querySelector('#traitDesc')?.value ?? '';
+        this.classTraits = [...this.classTraits, { traitName: name, traitDesc: desc }];
+        localStorage.setItem('classTraits', JSON.stringify(this.classTraits));
+        this.showAddTrait = false;
+    }
+
+    deleteTrait(name){
+        const array = [...this.classTraits];
+        const updated = array.filter(trait => trait.traitName !== name)
+        this.classTraits = updated
+        localStorage.setItem('traits', JSON.stringify(this.classTraits))
+    }
+
+    addPerk(){
+        const name = this.renderRoot.querySelector('#perkName')?.value ?? '';
+        const desc = this.renderRoot.querySelector('#perkDesc')?.value ?? '';
+        this.perks = [...this.perks, { perkName: name, perkDesc: desc }];
+        localStorage.setItem('perks', JSON.stringify(this.perks));
+        this.showAddPerk = false;
+    }
+
+    deletePerk(name){
+        const array = [...this.perks];
+        const updated = array.filter(perk => perk.perkName !== name)
+        this.perks = updated
+        localStorage.setItem('perks', JSON.stringify(this.perks))
+    }
+
+    onExperienceBlur(id, value){
+        this.experience = {
+            ...this.experience,
+            [id]: value
+        };
+        localStorage.setItem('experience', JSON.stringify(this.experience));
+    }
+
+    onClassBlur(id, value){
+        this.class = {
+            ...this.class,
+            [id]: value
+        };
+        localStorage.setItem('class', JSON.stringify(this.class));
+    }
+
     render(){
         return html`
             <section class="wrapper">
@@ -241,41 +298,44 @@ export class CharacterClass extends LitElement {
                     <div class="stats">
                         <span class="xptitle">KOKEMUSTASO</span>
                         <textarea
-                        id="loitsimisominaisuus"
+                        id="kokemustaso"
                         class="statTextarea"
                         rows="1"
                         spellcheck="false"
+                        @blur="${e => this.onExperienceBlur(e.target.id, e.target.value)}" .value="${this.experience.kokemustaso || ''}"
                         ></textarea>
                     </div>
                     <div class="stats">
                         <span class="xptitle">KOKEMUSPISTEET</span>
                         <textarea
-                        id="VA"
+                        id="kokemuspisteet"
                         class="statTextarea"
                         rows="1"
+                        @blur="${e => this.onExperienceBlur(e.target.id, e.target.value)}" .value="${this.experience.kokemuspisteet || ''}"
                         ></textarea>
                     </div>
                     <div class="stats">
                         <span class="xptitle">SEURAAVA KOKEMUSTASO</span>
                         <textarea
-                        id="hyökkäysmuuttuja"
+                        id="seuraavaKokemustaso"
                         class="statTextarea"
                         rows="1"
+                        @blur="${e => this.onExperienceBlur(e.target.id, e.target.value)}" .value="${this.experience.seuraavaKokemustaso || ''}"
                         ></textarea>
                     </div>
                 </div>
                 <p class="title">HAHMOLUOKKA</p>
-                <textarea id="class" class="field" spellcheck="false"></textarea>
+                <textarea id="class" class="field" spellcheck="false" @blur="${e => this.onClassBlur(e.target.id, e.target.value)}" .value="${this.class.class || ''}"></textarea>
                 <p class="title">POLKU</p>
-                <textarea id="path" class="field" spellcheck="false"></textarea>
+                <textarea id="path" class="field" spellcheck="false" @blur="${e => this.onClassBlur(e.target.id, e.target.value)}" .value="${this.class.path || ''}"></textarea></textarea>
                 <section>
                     <p class="title">HAHMOLUOKAN PIIRTEET</p>
                     <div>
-                        ${this.traits.map((trait) => html`
-                            <p class="secondaryTitle"></p>
+                        ${this.classTraits.map((classTrait) => html`
+                            <p class="secondaryTitle">${classTrait.traitName}</p>
                             <div class="traitRow">
-                                <p class="desc">${trait.traitDesc}</p>
-                                <img src="../icons/trash.png" class="img">
+                                <p class="desc">${classTrait.traitDesc}</p>
+                                <img src="../icons/trash.png" class="img" @click="${() => this.deleteTrait(classTrait.traitName)}">
                             </div>
                         `)}
                     </div>
@@ -284,11 +344,11 @@ export class CharacterClass extends LitElement {
                 <section>
                     <p class="title">VALTIT</p>
                     <div>
-                        ${this.traits.map((trait) => html`
-                            <p class="secondaryTitle"></p>
+                        ${this.perks.map((perk) => html`
+                            <p class="secondaryTitle">${perk.perkName}</p>
                             <div class="traitRow">
-                                <p class="desc">${trait.traitDesc}</p>
-                                <img src="../icons/trash.png" class="img">
+                                <p class="desc">${perk.perkDesc}</p>
+                                <img src="../icons/trash.png" class="img" @click="${() => this.deletePerk(perk.perkName)}">
                             </div>
                         `)}
                     </div>
@@ -315,10 +375,10 @@ export class CharacterClass extends LitElement {
                 <button class="closeBtn" @click="${this.closeAddPerk}">X</button>
                 </div>
                 <div>VALTIN NIMI</div>
-                <div class="nimi"><textarea class="textbox" id="specialityName"></textarea></div>
+                <div class="nimi"><textarea class="textbox" id="perkName"></textarea></div>
                 <div>VALTIN KUVAUS</div>
-                <div class="traitDesc"><textarea class="textbox" id="specialityDesc"></textarea></div>
-                <button type="button" class="formAddBtn" @click="${this.addSpeciality}">LISÄÄ</button>
+                <div class="traitDesc"><textarea class="textbox" id="perkDesc"></textarea></div>
+                <button type="button" class="formAddBtn" @click="${this.addPerk}">LISÄÄ</button>
             </div>
             ` : ''}
         `;

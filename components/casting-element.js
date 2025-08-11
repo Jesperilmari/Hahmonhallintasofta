@@ -852,7 +852,7 @@ export class Casting extends LitElement {
 
         <div class="addSpellRow">
           <select class="spellsDropDown" id="spells">
-            <option value="default" disabled selected>Lisää taika</option>
+            <option value="default" disabled selected>Lisää loitsu</option>
             ${this.spells.map(
       spell => html`<option class="dropdownOption" value="${spell.nimi}">${spell.nimi}</option>`
     )}
