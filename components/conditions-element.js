@@ -16,113 +16,39 @@ class ConditionsElement extends LitElement {
         justify-content: center;
         position:relative
     }
-    .acBorder{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        margin: 10px;
-        width: 260px;
-        border-radius: 10px;
-    }
     .title{
         font-weight: bold;
         margin-bottom: 10px;
     }
 
-    button{
-    margin: 3px;
-    width:25px;
-    height:25px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-      border-style: solid;
-      z-index: 10;
-    position: relative;
-    }
-    
-    .buttonPos{
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-    }
-    .ac{
-        font-weight: bold;
-        font-size: 50px;
-        border: 1px solid lightgray;
-        width: 90px;
-        border-radius: 10px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
-    .ac.highlighted{
-        background-color: lightgray;
-    }
-    .shield{
-        font-weight: bold;
-        font-size: 50px;
-        border: 1px solid lightgray;
-        width: 90px;
-        border-radius: 10px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
-    .shield.highlighted{
-        background-color: lightgray;
+    .textbox {
+      font-family: "Roboto Condensed", sans-serif;
+      border: none;
+      width: 100%;
+      min-height: 1px;
+      height: auto;
+      resize: none;
+      overflow: hidden;
+      line-height: 25px;
+      border-bottom: solid 1px lightgray;
+      box-sizing: border-box;
     }
   `;
-    static properties = {
-        ac: { type: Number },
-        shield: { type: Number },
-        highlightAc: { type: Boolean },
-        highlightShield: { type: Boolean },
-        showButtonsAc: { type: Boolean }
-    };
-
-    constructor() {
-        super();
-        this.highlightAc = false;
-        this.highlightShield = false;
-        this.ac = 10;
-        this.shield = 12;
-        this.showButtonsAc = false;
-    }
-
-    mouseEnterAc() {
-        this.highlightAc = true;
-    }
-    mouseLeaveAc() {
-        this.highlightAc = false;
-    }
-
-    mouseEnterShield() {
-        this.highlightShield = true;
-    }
-    mouseLeaveShield() {
-        this.highlightShield = false;
-    }
-
-    toggleButtonsAc() {
-        this.showButtonsAc = !this.showButtonsAc;
-    }
-
-    changeAc(i) {
-        const newAc = this.ac + i;
-        this.ac = newAc;
-    }
 
     render() {
         return html`
     <div class="wrapper">
         <div class="acBorder">
-            Olotilat
+            <div class="row">
+                <div class="olotilat">
+                    <div>
+                        Olotilat
+                    </div>
+                    <textarea class="textbox">
+
+                    </textarea>
+                </div>
+            </div>
         </div>
     </div>
     `;

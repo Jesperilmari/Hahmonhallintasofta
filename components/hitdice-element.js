@@ -16,113 +16,26 @@ class HitDice extends LitElement {
         justify-content: center;
         position:relative
     }
-    .acBorder{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        margin: 10px;
-        width: 260px;
-        border-radius: 10px;
-    }
     .title{
-        font-weight: bold;
-        margin-bottom: 10px;
-    }
-
-    button{
-    margin: 3px;
-    width:25px;
-    height:25px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-      border-style: solid;
-      z-index: 10;
-    position: relative;
-    }
-    
-    .buttonPos{
+        margin: 0;
+        padding: 0;
         display: flex;
-        flex-direction: row;
         justify-content: center;
         align-items: center;
-    }
-    .ac{
+        padding-top: 5px;
         font-weight: bold;
-        font-size: 50px;
-        border: 1px solid lightgray;
-        width: 90px;
-        border-radius: 10px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
     }
-    .ac.highlighted{
-        background-color: lightgray;
-    }
-    .shield{
-        font-weight: bold;
-        font-size: 50px;
-        border: 1px solid lightgray;
-        width: 90px;
-        border-radius: 10px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
-    .shield.highlighted{
-        background-color: lightgray;
-    }
-  `;
+    `;
     static properties = {
-        ac: { type: Number },
-        shield: { type: Number },
-        highlightAc: { type: Boolean },
-        highlightShield: { type: Boolean },
-        showButtonsAc: { type: Boolean }
     };
 
     constructor() {
         super();
-        this.highlightAc = false;
-        this.highlightShield = false;
-        this.ac = 10;
-        this.shield = 12;
-        this.showButtonsAc = false;
     }
-
-    mouseEnterAc() {
-        this.highlightAc = true;
-    }
-    mouseLeaveAc() {
-        this.highlightAc = false;
-    }
-
-    mouseEnterShield() {
-        this.highlightShield = true;
-    }
-    mouseLeaveShield() {
-        this.highlightShield = false;
-    }
-
-    toggleButtonsAc() {
-        this.showButtonsAc = !this.showButtonsAc;
-    }
-
-    changeAc(i) {
-        const newAc = this.ac + i;
-        this.ac = newAc;
-    }
-
     render() {
         return html`
     <div class="wrapper">
-        <div class="acBorder">
-            Osumanopat
+            <p class="title">OSUMANOPAT</p>
         </div>
     </div>
     `;

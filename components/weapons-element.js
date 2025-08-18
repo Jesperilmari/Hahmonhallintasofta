@@ -254,15 +254,17 @@ class Weapons extends LitElement {
     }
 
     incrementHB(index) {
-    const updated = [...this.addedWeapons];
-    updated[index].hbBonus += 1;
-    this.addedWeapons = updated;
+        const updated = [...this.addedWeapons];
+        updated[index].hbBonus += 1;
+        this.addedWeapons = updated;
+        localStorage.setItem('weapons', JSON.stringify(this.addedWeapons));
     }
 
     decrementHB(index) {
         const updated = [...this.addedWeapons];
         updated[index].hbBonus -= 1;
         this.addedWeapons = updated;
+        localStorage.setItem('weapons', JSON.stringify(this.addedWeapons));
     }
     
     onStatBlur(e, index, statKey) {
