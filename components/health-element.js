@@ -69,7 +69,6 @@ class Health extends LitElement {
         justify-content: center;
         align-items: center;
         padding-top: 5px;
-        font-weight: bold;
     }
     .nyk{
         margin: 0;
