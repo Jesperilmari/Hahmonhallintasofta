@@ -173,7 +173,6 @@ class Weapons extends LitElement {
     `;
 
     staticProperties = {
-        simpleMeleeWeapons: { type: Array },
         addedWeapons: { type: Array },
         weaponlessHB: {type: Number},
         hb: {type: Number}
@@ -189,7 +188,7 @@ class Weapons extends LitElement {
     constructor() {
         super();
         this.weapons = [];
-        this.addedWeapons =  JSON.parse(localStorage.getItem('weapons') || '[]');;
+        this.addedWeapons =  JSON.parse(localStorage.getItem('weapons') || '[]');
 
     }
 
