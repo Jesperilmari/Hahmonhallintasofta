@@ -223,7 +223,7 @@ export class Inventory extends LitElement {
     .itemDescWrapper{
         width:100%;
     }
-    .itemDesc{
+    .itemDetails{
         margin-left: auto;
         padding-left: 20px;
     }
@@ -413,7 +413,7 @@ export class Inventory extends LitElement {
                     ${this.openItemDetails.has(item.Nimi)
                             ? html`
                             <div class="itemDescWrapper">
-                                <p class="itemDesc">${item.Kuvaus}</p>
+                                <p class="itemDetails">${item.Kuvaus}</p>
                             </div>
                             `: ''}
                     `)}

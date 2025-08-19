@@ -178,7 +178,6 @@ character-tabs {
     </div>
     <div class="secondRow">
         <div class="skillsWrapper">
-            <conditions-element></conditions-element>
         <div class="skills">
             <div class="skilltitles">
                 <p class="pate">PÄTE</p>

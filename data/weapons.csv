@@ -17,5 +17,24 @@ Tikka,5kup,1n4,pistovahinkoa,"0,1kg","Tarkkuus heitettävä (kantama 8/24)",Yksi
 Taistelukirves,10kr,1n8/1n10,viiltovahinkoa,2kg,Yhden tai kahden käden ase (1n10),Lähitaisteluun sopivat sota-aseet
 Sotavarsta,10kr,1n8,murskausvahinkoa,1kg,-,Lähitaisteluun sopivat sota-aseet
 Varsimiekka,20kr,1n10,viiltovahinkoa,4kg,"Raskas ase, ulottuva, kahden käden ase",Lähitaisteluun sopivat sota-aseet
+Suurkirves,30kr,1n12,viiltovahinkoa,3kg,"Raskas ase,kahden käden ase"
+Suurmiekka,50kr,2n6,viiltovahinkoa,3kg,"Raskas ase, lahden käden ase"
+Hilpari,20kr,1n10,viiltovahinkoa,3kg,"Raskas ase, ulottuva, kahden käden ase"
+Peitsi,10kr,1n12,pistovahinkoa,3kg,"Ulottuva, erikoispiirre"
+Miekka,15kr,1n8,viiltovahinkoa,1kg,"Yhden tai kahden käden ase (1n10)"
+Leka,10kr,2n6,murskausvahinkoa,5kg,"Raskas ase, kahden käden ase"
+Piikkinuija,15kr,1n8,pistovahinkoa,2kg,"-"
+Sotakeihäs,5kr,1n10,pistovahinkoa,8kg,"Raskas ase, ulottuva, kahden käden ase"
+Pistomiekka,25kr,1n8,pistovahinkoa,1kgm,"Tarkkuus"
+Sapeli,25kr,1n6,viiltovahinkoa,1kg,"Tarkkuus, kevyt ase"
+Lyhytmiekka,10kr,1n6,pistovahinkoa,1kg,"Tarkkuus, kevyt ase"
+Atrain,5kr,1n6,pistovahinkoa,2kg,"Heitettävä (kantama 8/24), yhden tai kahden käden ase (1n8)"
+Sotahakku,5kr,1n8,pistovahinkoa,1kg,"Yhden tai kahden käden ase (1n10)"
+Ruoska,2kr,1n4,viiltovahinkoa,1kg,"Tarkkuus, ulottuva"
 
+Puhallusputki,10kr,1,pistovahinkoa,1kg,"Ammukset (kantama 10/40), ladattava"
+Käsivarsijousi,75kr,1n6,pistovahinkoa,1kg,"Ammukset (kantama 12/48), kevyt ase, ladattava"
+Raskas varsijousi,50kr,1n10,pistovahinkoa,8kg,"Ammukset (kantama 40/160), raskas ase, ladattava, kahden käden ase"
+Pitkäjousi,50kr,1n8,pistovahinkoa,1kg,"Ammukset (kantama 60/240), raskas ase, kahden käden ase"
+Verkko,1kr,-,-,1kg,"Erikoispiirre, heitettävä (kantama 2/6)"
 Mukautettu ase,-,-,-,-,-,-
