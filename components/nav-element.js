@@ -37,11 +37,21 @@ class Nav extends LitElement {
     color: white;
     margin-right: 2px;
   }
+  .options{
+    display: flex;
+    flex-direction: row;
+    margin-left: auto;
+  }
+  input[type="file"] {
+      display: none;
+    }
   `;
   static properties = {
     highlightHome: { type: Boolean },
     highlightSpells: { type: Boolean },
     highlightWeapons: { type: Boolean },
+    highlightSave: { type: Boolean },
+    highlightUpload: { type: Boolean },
   };
 
   constructor() {
@@ -49,6 +59,57 @@ class Nav extends LitElement {
     this.highlightHome = false;
     this.highlightSpells = false;
     this.highlightWeapons = false;
+    this.highlightSave = false;
+    this.highlightUpload = false;
+  }
+
+  firstUpdated() {
+    this.fileInput = this.renderRoot.querySelector('#fileInput');
+    this.fileInput.addEventListener('change', (e) => this.handleFile(e));
+  }
+
+  handleFile(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const data = JSON.parse(e.target.result);
+
+        Object.keys(data).forEach((key) => {
+          localStorage.setItem(key, data[key]);
+        });
+        window.location.reload();
+      } catch (err) {
+        alert('Invalid JSON file.');
+      }
+    };
+    reader.readAsText(file);
+    event.target.value = '';
+  }
+
+  exportData() {
+    const data = {};
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      data[key] = localStorage.getItem(key);
+    }
+
+    const jsonStr = JSON.stringify(data, null, 2);
+
+    const blob = new Blob([jsonStr], { type: "application/json" });
+
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "Hahmolomake.json";
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  openFileDialog() {
+    this.fileInput.click();
   }
 
   render() {
@@ -85,6 +146,25 @@ class Nav extends LitElement {
           ASEET
         </div>
       </button>
+      <span class="options">
+          <input id="fileInput" type="file"/>
+          <button class="wrapper ${this.highlightUpload ? 'highlighted' : ''}" @click=${this.openFileDialog}
+              @mouseenter=${() => this.highlightUpload = true}
+              @mouseleave=${() => this.highlightUpload = false}>
+            <div class="navbutton">
+              <img src="./icons/uploadfile.png" class="icon">
+              AVAA TIEDOSTO
+            </div>
+          </button>
+          <button class="wrapper ${this.highlightSave ? 'highlighted' : ''}" @click=${this.exportData}
+              @mouseenter=${() => this.highlightSave = true}
+              @mouseleave=${() => this.highlightSave = false}>
+            <div class="navbutton">
+              <img src="./icons/save.png" class="icon">
+              TALLENNA NIMELLÄ
+            </div>
+          </button>
+      </span>
     </div>
   `;
   }

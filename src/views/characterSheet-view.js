@@ -44,6 +44,7 @@ class CharacterSheet extends LitElement {
 
 .skillsWrapper{
     margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .firstRow {
@@ -159,6 +160,7 @@ character-tabs {
     async firstUpdated() {
         await this.updateComplete;
         window.dispatchEvent(new CustomEvent('attributes-ready'));
+        document.title = "Hahmolomake";
     }
 
     render() {

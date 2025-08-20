@@ -14,7 +14,8 @@ class ConditionsElement extends LitElement {
         display: flex;
         flex-direction: row;
         justify-content: center;
-        position:relative
+        position:relative;
+        margin-top: 15px;
     }
     .title{
         font-weight: bold;
@@ -44,9 +45,6 @@ class ConditionsElement extends LitElement {
                     <div>
                         Olotilat
                     </div>
-                    <textarea class="textbox">
-
-                    </textarea>
                 </div>
             </div>
         </div>

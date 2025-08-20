@@ -63,6 +63,7 @@ export class WeaponsView extends LitElement {
     async connectedCallback() {
         super.connectedCallback();
         await this.loadCSV();
+        document.title = "Aseet";
     }
 
     async loadCSV() {
