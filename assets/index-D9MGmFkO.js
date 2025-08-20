@@ -3673,7 +3673,7 @@ character-tabs {
           </button>
       </span>
     </div>
-  `}}customElements.define("nav-element",Ki);class Vi extends m{firstUpdated(){const e=this.shadowRoot.getElementById("outlet");new ae(e).setRoutes([{path:"/",component:"character-sheet"},{path:"/spells",component:"spells-view"},{path:"/weapons",component:"weapons-view"}])}render(){return c`
+  `}}customElements.define("nav-element",Ki);class Vi extends m{firstUpdated(){const e=this.shadowRoot.getElementById("outlet"),t=new ae(e),i=window.location.hostname==="localhost"?"/":"/hahmonhallintasofta/";t.baseUrl=i,t.setRoutes([{path:"/",component:"character-sheet"},{path:"/spells",component:"spells-view"},{path:"/weapons",component:"weapons-view"}])}render(){return c`
             <nav-element></nav-element>
             <div id="outlet"></div>
         `}}customElements.define("app-root",Vi);
