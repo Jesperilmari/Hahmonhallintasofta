@@ -1,32 +1,31 @@
-import { LitElement, html, css } from 'lit';
+import { LitElement, html } from 'lit';
 import { Router } from '@vaadin/router';
-
 import './views/characterSheet-view.js';
 import './views/spells-view.js';
 import './views/weapons-view.js';
 import './components/nav-element.js';
+import './css/main.css';
 
 export class AppRoot extends LitElement {
+  createRenderRoot() { return this; }
+  render() {
+    return html`
+      <nav-element></nav-element>
+      <div id="outlet"></div>
+    `;
+  }
 
-    firstUpdated() {
-    const outlet = this.shadowRoot.getElementById('outlet');
-    const router = new Router(outlet, { useHash: true });
-    const baseUrl = window.location.hostname === 'localhost'
-    // local dev
-    ? '/'
-    // GitHub Pages
-    : '/Hahmonhallintasofta/';
-router.baseUrl = baseUrl;
+  firstUpdated() {
+    const outlet = this.querySelector('#outlet');
+    const router = new Router(outlet);
+
+    router.useHash = true;
     router.setRoutes([
-      { path: '/', component: 'character-sheet' },
-      { path: '/spells', component: 'spells-view' },
-      { path: '/weapons', component: 'weapons-view'}
+      { path: '/Hahmonhallintasofta/', component: 'character-sheet' },
+      { path: '/Hahmonhallintasofta/spells', component: 'spells-view' },
+      { path: '/Hahmonhallintasofta/weapons', component: 'weapons-view' },
     ]);
   }
-    render() {
-        return html`
-            <nav-element></nav-element>
-            <div id="outlet"></div>
-        `;
-    }
-} customElements.define('app-root', AppRoot);
+}
+
+customElements.define('app-root', AppRoot);

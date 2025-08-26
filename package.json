@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@vaadin/router": "^2.0.0",
+    "gh": "^2.8.9",
     "lit": "^3.3.1"
   }
 }

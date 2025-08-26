@@ -42,7 +42,7 @@ export class SpellsView extends LitElement {
   }
 
   async loadCSV() {
-    const response = await fetch("data/spells.csv")
+    const response = await fetch(import.meta.env.BASE_URL + "data/spells.csv")
     const csvText = await response.text();
 
     const result = Papa.parse(csvText, {

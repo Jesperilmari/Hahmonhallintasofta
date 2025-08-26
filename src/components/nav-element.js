@@ -116,33 +116,33 @@ class Nav extends LitElement {
     return html`
     <div class="bar">
       <button class="wrapper ${this.highlightHome ? 'highlighted' : ''}" 
-        @click=${() => Router.go('/')}
+        @click=${() => Router.go('/Hahmonhallintasofta/')}
         @mouseenter=${() => this.highlightHome = true}
         @mouseleave=${() => this.highlightHome = false}
       >
         <div class="navbutton">
-          <img src="icons/scroll.png" class="icon">
+          <img src="${import.meta.env.BASE_URL}icons/scroll.png" class="icon">
           HAHMOLOMAKE
         </div>
       </button>
 
       <button class="wrapper ${this.highlightSpells ? 'highlighted' : ''}" 
-        @click=${() => Router.go('/spells')}
+        @click=${() => Router.go('/Hahmonhallintasofta/spells')}
         @mouseenter=${() => this.highlightSpells = true}
         @mouseleave=${() => this.highlightSpells = false}
       >
         <div class="navbutton">
-          <img src="/icons/spell.png" class="icon">
+          <img src="${import.meta.env.BASE_URL}icons/spell.png" class="icon">
           LOITSUT
         </div>
       </button>
       <button class="wrapper ${this.highlightWeapons ? 'highlighted' : ''}" 
-        @click=${() => Router.go('/weapons')}
+        @click=${() => Router.go('/Hahmonhallintasofta/weapons')}
         @mouseenter=${() => this.highlightWeapons = true}
         @mouseleave=${() => this.highlightWeapons = false}
       >
         <div class="navbutton">
-          <img src="icons/sword.png" class="icon">
+          <img src="${import.meta.env.BASE_URL}icons/sword.png" class="icon">
           ASEET
         </div>
       </button>
@@ -152,7 +152,7 @@ class Nav extends LitElement {
               @mouseenter=${() => this.highlightUpload = true}
               @mouseleave=${() => this.highlightUpload = false}>
             <div class="navbutton">
-              <img src="/icons/uploadfile.png" class="icon">
+              <img src="${import.meta.env.BASE_URL}icons/uploadfile.png" class="icon">
               AVAA TIEDOSTO
             </div>
           </button>
@@ -160,7 +160,7 @@ class Nav extends LitElement {
               @mouseenter=${() => this.highlightSave = true}
               @mouseleave=${() => this.highlightSave = false}>
             <div class="navbutton">
-              <img src="icons/save.png" class="icon">
+              <img src="${import.meta.env.BASE_URL}icons/save.png" class="icon">
               TALLENNA NIMELLÄ
             </div>
           </button>
