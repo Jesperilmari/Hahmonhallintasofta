@@ -1,5 +1,5 @@
 import { LitElement, html, css } from 'lit';
-import '../../components/spell-card.js';
+import '../components/spell-card.js';
 
 export class SpellsView extends LitElement {
 

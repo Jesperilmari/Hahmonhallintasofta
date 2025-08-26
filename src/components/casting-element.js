@@ -1,4 +1,5 @@
 import { LitElement, html, css } from 'lit';
+import { asset } from '../utils/assets.js';
 
 export class Casting extends LitElement {
   static styles = css`
@@ -219,7 +220,7 @@ export class Casting extends LitElement {
   }
 
   async loadCSV() {
-    const response = await fetch("data/spells.csv");
+    const response = await fetch("data#/spells.csv");
     const csvText = await response.text();
     const result = Papa.parse(csvText, {
       header: true,
@@ -401,12 +402,12 @@ export class Casting extends LitElement {
                 <span class="spellTitle">${spell.nimi}</span>
                 <div class="options">
                   <img
-                    src="../icons/down-arrow.png"
+                    src="/icons/down-arrow.png"
                     class="img"
                     @click="${() => this.toggleSpellDetail(spell.nimi)}"
                     title="Show Details"
                   >
-                  <img src="../icons/trash.png" class="img" title="Delete" @click="${() => this.deleteSpell(spell.nimi)}">
+                  <img src="/icons/trash.png" class="img" title="Delete" @click="${() => this.deleteSpell(spell.nimi)}">
                 </div>
               </div>
 
@@ -447,12 +448,12 @@ export class Casting extends LitElement {
                 <span class="spellTitle">${spell.nimi}</span>
                 <div class="options">
                   <img
-                    src="../icons/down-arrow.png"
+                    src="/icons/down-arrow.png"
                     class="img"
                     @click="${() => this.toggleSpellDetail(spell.nimi)}"
                     title="Show Details"
                   >
-                  <img src="../icons/trash.png" class="img" title="Delete" @click="${() => this.deleteSpell(spell.nimi)}">
+                  <img src="/icons/trash.png" class="img" title="Delete" @click="${() => this.deleteSpell(spell.nimi)}">
                 </div>
               </div>
 
@@ -493,12 +494,12 @@ export class Casting extends LitElement {
                 <span class="spellTitle">${spell.nimi}</span>
                 <div class="options">
                   <img
-                    src="../icons/down-arrow.png"
+                    src="/icons/down-arrow.png"
                     class="img"
                     @click="${() => this.toggleSpellDetail(spell.nimi)}"
                     title="Show Details"
                   >
-                  <img src="../icons/trash.png" class="img" title="Delete" @click="${() => this.deleteSpell(spell.nimi)}">
+                  <img src="/icons/trash.png" class="img" title="Delete" @click="${() => this.deleteSpell(spell.nimi)}">
                 </div>
               </div>
 
@@ -539,12 +540,12 @@ export class Casting extends LitElement {
                 <span class="spellTitle">${spell.nimi}</span>
                 <div class="options">
                   <img
-                    src="../icons/down-arrow.png"
+                    src="/icons/down-arrow.png"
                     class="img"
                     @click="${() => this.toggleSpellDetail(spell.nimi)}"
                     title="Show Details"
                   >
-                  <img src="../icons/trash.png" class="img" title="Delete" @click="${() => this.deleteSpell(spell.nimi)}">
+                  <img src="/icons/trash.png" class="img" title="Delete" @click="${() => this.deleteSpell(spell.nimi)}">
                 </div>
               </div>
 
@@ -585,12 +586,12 @@ export class Casting extends LitElement {
                 <span class="spellTitle">${spell.nimi}</span>
                 <div class="options">
                   <img
-                    src="../icons/down-arrow.png"
+                    src="icons/down-arrow.png"
                     class="img"
                     @click="${() => this.toggleSpellDetail(spell.nimi)}"
                     title="Show Details"
                   >
-                  <img src="../icons/trash.png" class="img" title="Delete" @click="${() => this.deleteSpell(spell.nimi)}">
+                  <img src="icons/trash.png" class="img" title="Delete" @click="${() => this.deleteSpell(spell.nimi)}">
                 </div>
               </div>
 
@@ -631,12 +632,12 @@ export class Casting extends LitElement {
                 <span class="spellTitle">${spell.nimi}</span>
                 <div class="options">
                   <img
-                    src="../icons/down-arrow.png"
+                    src="icons/down-arrow.png"
                     class="img"
                     @click="${() => this.toggleSpellDetail(spell.nimi)}"
                     title="Show Details"
                   >
-                  <img src="../icons/trash.png" class="img" title="Delete" @click="${() => this.deleteSpell(spell.nimi)}">
+                  <img src="icons/trash.png" class="img" title="Delete" @click="${() => this.deleteSpell(spell.nimi)}">
                 </div>
               </div>
 
@@ -677,12 +678,12 @@ export class Casting extends LitElement {
                 <span class="spellTitle">${spell.nimi}</span>
                 <div class="options">
                   <img
-                    src="../icons/down-arrow.png"
+                    src="icons/down-arrow.png"
                     class="img"
                     @click="${() => this.toggleSpellDetail(spell.nimi)}"
                     title="Show Details"
                   >
-                  <img src="../icons/trash.png" class="img" title="Delete" @click="${() => this.deleteSpell(spell.nimi)}">
+                  <img src="icons/trash.png" class="img" title="Delete" @click="${() => this.deleteSpell(spell.nimi)}">
                 </div>
               </div>
 
@@ -723,12 +724,12 @@ export class Casting extends LitElement {
                 <span class="spellTitle">${spell.nimi}</span>
                 <div class="options">
                   <img
-                    src="../icons/down-arrow.png"
+                    src="icons/down-arrow.png"
                     class="img"
                     @click="${() => this.toggleSpellDetail(spell.nimi)}"
                     title="Show Details"
                   >
-                  <img src="../icons/trash.png" class="img" title="Delete" @click="${() => this.deleteSpell(spell.nimi)}">
+                  <img src="icons/trash.png" class="img" title="Delete" @click="${() => this.deleteSpell(spell.nimi)}">
                 </div>
               </div>
 
@@ -769,12 +770,12 @@ export class Casting extends LitElement {
                 <span class="spellTitle">${spell.nimi}</span>
                 <div class="options">
                   <img
-                    src="../icons/down-arrow.png"
+                    src="icons/down-arrow.png"
                     class="img"
                     @click="${() => this.toggleSpellDetail(spell.nimi)}"
                     title="Show Details"
                   >
-                  <img src="../icons/trash.png" class="img" title="Delete" @click="${() => this.deleteSpell(spell.nimi)}">
+                  <img src="icons/trash.png" class="img" title="Delete" @click="${() => this.deleteSpell(spell.nimi)}">
                 </div>
               </div>
 
@@ -815,12 +816,12 @@ export class Casting extends LitElement {
                 <span class="spellTitle">${spell.nimi}</span>
                 <div class="options">
                   <img
-                    src="../icons/down-arrow.png"
+                    src="icons/down-arrow.png"
                     class="img"
                     @click="${() => this.toggleSpellDetail(spell.nimi)}"
                     title="Show Details"
                   >
-                  <img src="../icons/trash.png" class="img" title="Delete" @click="${() => this.deleteSpell(spell.nimi)}">
+                  <img src="icons/trash.png" class="img" title="Delete" @click="${() => this.deleteSpell(spell.nimi)}">
                 </div>
               </div>
 

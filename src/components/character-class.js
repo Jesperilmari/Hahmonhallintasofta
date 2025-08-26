@@ -335,7 +335,7 @@ export class CharacterClass extends LitElement {
                             <p class="secondaryTitle">${classTrait.traitName}</p>
                             <div class="traitRow">
                                 <p class="desc">${classTrait.traitDesc}</p>
-                                <img src="../icons/trash.png" class="img" @click="${() => this.deleteTrait(classTrait.traitName)}">
+                                <img src="icons/trash.png" class="img" @click="${() => this.deleteTrait(classTrait.traitName)}">
                             </div>
                         `)}
                     </div>
@@ -348,7 +348,7 @@ export class CharacterClass extends LitElement {
                             <p class="secondaryTitle">${perk.perkName}</p>
                             <div class="traitRow">
                                 <p class="desc">${perk.perkDesc}</p>
-                                <img src="../icons/trash.png" class="img" @click="${() => this.deletePerk(perk.perkName)}">
+                                <img src="icons/trash.png" class="img" @click="${() => this.deletePerk(perk.perkName)}">
                             </div>
                         `)}
                     </div>

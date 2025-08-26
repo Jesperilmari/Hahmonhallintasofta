@@ -275,7 +275,7 @@ export class RaceNbg extends LitElement {
                         <p class="secondaryTitle">${trait.traitName}</p>
                         <div class="traitRow">
                             <p class="desc">${trait.traitDesc}</p>
-                            <img src="../icons/trash.png" class="img" @click="${() => this.deleteTrait(trait.traitName)}">
+                            <img src="icons/trash.png" class="img" @click="${() => this.deleteTrait(trait.traitName)}">
                         </div>
                     `)}
                 </div>
@@ -290,7 +290,7 @@ export class RaceNbg extends LitElement {
                         <p class="secondaryTitle">${speciality.specialityName}</p>
                         <div class="traitRow">
                             <p class="desc">${speciality.specialityDesc}</p>
-                            <img src="../icons/trash.png" class="img" @click="${() => this.deleteSpeciality(speciality.specialityName)}">
+                            <img src="icons/trash.png" class="img" @click="${() => this.deleteSpeciality(speciality.specialityName)}">
                         </div>
                     `)}
                 </div>

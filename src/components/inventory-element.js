@@ -374,14 +374,14 @@ export class Inventory extends LitElement {
                         </span>
 
                         <div class="options">
-                        <img src="../icons/trash.png" class="img" title="Delete" @click="${() => this.deleteWeapon(weapon.Nimi)}">
+                        <img src="icons/trash.png" class="img" title="Delete" @click="${() => this.deleteWeapon(weapon.Nimi)}">
                         </div>
                     </span>
                     </div>
                 `)}
                 ${this.addedItems.map((item, i) => html`
                     <div class="weaponRow ${(i + startIndex) % 2 === 0 ? 'even' : 'odd'}">
-                        <img src="../icons/down-arrow.png" class="img" title="Details" @click="${() => this.toggleItemDetail(item.Nimi)}">
+                        <img src="icons/down-arrow.png" class="img" title="Details" @click="${() => this.toggleItemDetail(item.Nimi)}">
                         <p class="name">${item.Nimi}</p>
                         <span class="right">
                         <input 
@@ -406,7 +406,7 @@ export class Inventory extends LitElement {
                         </span>
 
                         <div class="options">
-                            <img src="../icons/trash.png" class="img" title="Delete" @click="${() => this.deleteItem(i)}">
+                            <img src="icons/trash.png" class="img" title="Delete" @click="${() => this.deleteItem(i)}">
                         </div>
                         </span>
                     </div>

@@ -121,7 +121,7 @@ class Nav extends LitElement {
         @mouseleave=${() => this.highlightHome = false}
       >
         <div class="navbutton">
-          <img src="./icons/scroll.png" class="icon">
+          <img src="icons/scroll.png" class="icon">
           HAHMOLOMAKE
         </div>
       </button>
@@ -132,7 +132,7 @@ class Nav extends LitElement {
         @mouseleave=${() => this.highlightSpells = false}
       >
         <div class="navbutton">
-          <img src="./icons/spell.png" class="icon">
+          <img src="/icons/spell.png" class="icon">
           LOITSUT
         </div>
       </button>
@@ -142,7 +142,7 @@ class Nav extends LitElement {
         @mouseleave=${() => this.highlightWeapons = false}
       >
         <div class="navbutton">
-          <img src="./icons/sword.png" class="icon">
+          <img src="icons/sword.png" class="icon">
           ASEET
         </div>
       </button>
@@ -152,7 +152,7 @@ class Nav extends LitElement {
               @mouseenter=${() => this.highlightUpload = true}
               @mouseleave=${() => this.highlightUpload = false}>
             <div class="navbutton">
-              <img src="./icons/uploadfile.png" class="icon">
+              <img src="/icons/uploadfile.png" class="icon">
               AVAA TIEDOSTO
             </div>
           </button>
@@ -160,7 +160,7 @@ class Nav extends LitElement {
               @mouseenter=${() => this.highlightSave = true}
               @mouseleave=${() => this.highlightSave = false}>
             <div class="navbutton">
-              <img src="./icons/save.png" class="icon">
+              <img src="icons/save.png" class="icon">
               TALLENNA NIMELLÄ
             </div>
           </button>

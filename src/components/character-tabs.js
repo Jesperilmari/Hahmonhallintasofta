@@ -1,10 +1,10 @@
 import { LitElement, html, css } from 'lit-element';
-import '../../components/weapons-element.js';
-import '../../components/raceNbg-element.js';
-import '../../components/casting-element.js';
-import '../../components/inventory-element.js';
-import '../../components/character-class.js';
-import '../../components/notes-element.js';
+import './weapons-element.js';
+import './raceNbg-element.js';
+import './casting-element.js';
+import './inventory-element.js';
+import './character-class.js';
+import './notes-element.js';
 
 class CharacterTabs extends LitElement {
     static styles = css`
@@ -72,7 +72,7 @@ class CharacterTabs extends LitElement {
     renderView() {
         switch (this.currentView) {
             case 'aseet':
-                return html`<weapons-element></weapons-element>`;
+                return html`<weapons-element><#/weapons-element>`;
             case 'racenbg':
                 return html`<racenbg-element></racenbg-element>`;
             case 'casting':
@@ -84,7 +84,7 @@ class CharacterTabs extends LitElement {
             case 'notes':
                 return html`<notes-element></notes-element>`;
             default:
-                return html`<weapons-element></weapons-element>`;
+                return html`<weapons-element><#/weapons-element>`;
         }
     }
 }

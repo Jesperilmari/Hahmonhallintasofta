@@ -200,7 +200,7 @@ class Weapons extends LitElement {
     }
 
     async loadCSV() {
-        const response = await fetch("data/weapons.csv")
+        const response = await fetch("/data/weapons.csv")
         const csvText = await response.text();
 
         const result = Papa.parse(csvText, {
@@ -305,7 +305,7 @@ class Weapons extends LitElement {
                     </span>
                     <textarea class="propertiesTextArea" spellcheck="false" .value="${weapon.Ominaisuudet}" @blur="${e => this.onStatBlur(e, i, 'Ominaisuudet')}"></textarea>
                     <span class="options">
-                        <img src="../icons/trash.png" class="img" @click="${() => this.deleteWeapon(weapon.Nimi)}">
+                        <img src="/icons/trash.png" class="img" @click="${() => this.deleteWeapon(weapon.Nimi)}">
                     </span>
                 </div>
                 `)}

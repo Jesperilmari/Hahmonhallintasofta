@@ -1,17 +1,17 @@
 import { LitElement, html, css } from 'lit-element';
-import '../../components/character-attribute.js';
-import '../../components/skill-element.js';
-import '../../components/health-element.js';
-import '../../components/heropoint-element.js';
-import '../../components/saving-throws.js';
-import '../../components/proficiencies-element.js';
-import '../../components/senses-element.js';
-import '../../components/proficiency-bonus.js';
-import '../../components/speed-element.js';
-import '../../components/ac-element.js';
-import '../../components/hitdice-element.js';
-import '../../components/conditions-element.js';
-import '../../components/character-tabs.js';
+import '../components/character-attribute.js';
+import '../components/skill-element.js';
+import '../components/health-element.js';
+import '../components/heropoint-element.js';
+import '../components/saving-throws.js';
+import '../components/proficiencies-element.js';
+import '../components/senses-element.js';
+import '../components/proficiency-bonus.js';
+import '../components/speed-element.js';
+import '../components/ac-element.js';
+import '../components/hitdice-element.js';
+import '../components/conditions-element.js';
+import '../components/character-tabs.js';
 
 class CharacterSheet extends LitElement {
     static styles = css`
